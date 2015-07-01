@@ -26,16 +26,13 @@ var level2 = function () {
             }
 
                /*First Row */
-            ctx.drawImage(Resources.get('images/stone-block.png'), 0, 40);
-            ctx.drawImage(Resources.get('images/Ramp West.png'), 101, 0);
 
-            for (col = 2; col <4; col++) {
-                ctx.drawImage(Resources.get('images/stone-block.png'), col * 101, 0);
+
+            for (col = 0; col <6; col++) {
+                ctx.drawImage(Resources.get('images/Dirt Block.png'), col * 101, 30);
             }
 
 
-            ctx.drawImage(Resources.get('images/Ramp East.png'), 4*101, 0);
-            ctx.drawImage(Resources.get('images/stone-block.png'), 5*101, 40);
 
              /*Second Row */
 
@@ -44,7 +41,8 @@ var level2 = function () {
                 ctx.drawImage(Resources.get('images/grass-block.png'), col * 101, 115);
             }
 
-                ctx.drawImage(Resources.get('images/Tree Tall.png'), 3 * 101, 63);
+                ctx.drawImage(Resources.get('images/Rock.png'), 3 * 101, 80);
+                ctx.drawImage(Resources.get('images/Rock.png'), 4 * 101, 80);
 
               /*Third Row */
              for (col = 0; col < 2; col++) {
@@ -92,7 +90,7 @@ var level2 = function () {
             }
               /*Seventh Row */
           for (col = 0; col < 5; col++) {
-               ctx.drawImage(Resources.get('images/water-block.png'), col * 101, 555);
+               ctx.drawImage(Resources.get('images/water-block.png'), col * 101, 550);
             }
             ctx.drawImage(Resources.get('images/Ramp South.png'), 5 * 101, 515);
 
@@ -236,7 +234,7 @@ var Engine = (function(global) {
         'images/Dirt Block.png',
         'images/Ramp West.png',
         'images/Plain Block.png',
-        'images/Tree Tall.png',
+        'images/Rock.png',
         'images/Wood Block.png',
         'images/Wall Block.png',
         'images/Shadow South.png'
