@@ -1,7 +1,8 @@
-/* global ctx, canvasW, canvasH */
-var newX;
-var newY;
-var block;
+/* global ctx, global */
+
+
+var gameStatus = "play";
+
 
 var level2markers = {
     block1 : {
@@ -176,25 +177,48 @@ level2Blocks.addBlock(undefined, 515, undefined, 265);
 level2Blocks.addBlock(371, undefined, 206, 265);
 
 
-var Enemy = function(x, y) {
-    this.x = x;
-    this.y = y;
-    this.rate =  100 + Math.floor(Math.random() * 150);
-
-    this.sprite = 'images/char-princess-girl.png';
-
-    this.reset();
+var Enemy = function(x1, x2, y1, y2, rate) {
+    this.x = x1 +20;
+    this.y = (y1+y2)/2;
+    this.rate =  rate;
+    this.direction = "right";
+    this.x1 = x1;
+    this.x2 = x2;
+    this.sprite = 'images/enemy-bug.png';
+    this.width = 40;
+    this.height = 20;
 };
 
-Enemy.prototype.reset = function() {
-    this.x = -150;
+Enemy.prototype.picture = function() {
+    if (this.direction === "right") {
+        this.sprite = 'images/enemy-bug.png';
+    }
+    else if (this.direction === "left") {
+        this.sprite = 'images/enemy-bug-left.png';
+    }
+};
+Enemy.prototype.location = function() {
+    if(this.x > this.x2) {
+        this.direction = "left";
+    }else if ((this.x-8) < this.x1) {
+        this.direction = "right";
+    }
+};
+
+Enemy.prototype.move = function(dt) {
+    if(this.direction === "left"){
+        this.x = this.x - (dt * this.rate);
+    }else if (this.direction === "right"){
+        this.x = this.x + (dt * this.rate);
+    }
 };
 
 Enemy.prototype.update = function(dt) {
-    this.x = this.x + (dt * this.rate);
-    if (this.x > 700){
-    this.x = -100;
-  }
+    this.location();
+    this.picture();
+    this.move(dt);
+
+
 
 };
 
@@ -211,16 +235,16 @@ var Player = function() {
     this.reset();
     this.state = "stand";
     this.location = "block1";
-;
+    this.width =20;
+    this.height =40;
 };
-var jump = "yes";
 
 
 Player.prototype.update = function(dt) {
 
-    this.checkLocation();
-    this.move(dt);
 
+    this.move(dt);
+    this.checkLocation();
 };
 
 
@@ -228,7 +252,7 @@ Player.prototype.update = function(dt) {
 
 
 Player.prototype.move = function(dt) {
-    block = this.location;
+
    if(this.state === "move_left"
            && (this.x-3) > level2Blocks.blocks[this.location].left){
 
@@ -257,15 +281,9 @@ Player.prototype.move = function(dt) {
 };
 
 
-
-Player.prototype.checkCollisions = function() {
-
-
-};
-
 Player.prototype.reset = function() {
     this.x = 503;
-    this.y = 510;
+    this.y = 460;
 };
 
 
@@ -273,7 +291,15 @@ Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
-
+Player.prototype.checkLocation = function() {
+        for(var each in level2markers) {
+            if(this.x > level2markers[each].x1 && this.x < level2markers[each].x2 &&
+                this.y > level2markers[each].y1 && this.y<level2markers[each].y2) {
+                    this.location = each;
+                    break;
+                                    }
+        }
+};
 
 Player.prototype.handleInput = function(key) {
     switch(key){
@@ -330,27 +356,12 @@ document.addEventListener('keyup', function(e) {
 
 
 
-Player.prototype.checkLocation = function() {
-        for(var each in level2markers) {
-            if(this.x > level2markers[each].x1 && this.x < level2markers[each].x2 &&
-                this.y > level2markers[each].y1 && this.y<level2markers[each].y2) {
-                    this.location = each;
-                    break;
-                                    }
-        }
-};
+var emenyBlock52 = new Enemy(level2markers.block5.x1,level2markers.block2.x2-10,level2markers.block5.y1+20,level2markers.block5.y2,180);
+var emenyBlock8 = new Enemy(level2markers.block8.x1,level2markers.block9.x2,level2markers.block8.y1,level2markers.block8.y2,250);
+var emenyBlock1215 = new Enemy(level2markers.block12.x1,level2markers.block15.x2,level2markers.block13.y1+20,level2markers.block13.y2,180);
 
 
-
-
-
-
-
-
-
-
-
-  var allEnemies = [];
+var allEnemies = [emenyBlock52,emenyBlock8,emenyBlock1215];
 
 
 var player = new Player();

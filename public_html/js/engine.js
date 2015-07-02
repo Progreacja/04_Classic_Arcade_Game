@@ -15,8 +15,6 @@
  */
 /* global ctx, player, allEnemies */
 
-var canvasW;
-var canvasH;
 
 var level2 = function () {
 
@@ -96,7 +94,7 @@ var level2 = function () {
 
 };
 
-
+var gameStatus = "play";
 
 
 
@@ -113,8 +111,7 @@ var Engine = (function(global) {
 
     canvas.width = 606;
     canvas.height = 664;
-    canvasW = canvas.width;
-    canvasH = canvas.height;
+
     doc.body.appendChild(canvas);
 
     /* This function serves as the kickoff point for the game loop itself
@@ -168,7 +165,7 @@ var Engine = (function(global) {
      */
     function update(dt) {
         updateEntities(dt);
-        // checkCollisions();
+        checkCollisions();
     }
 
     /* This is called by the update function  and loops through all of the
@@ -178,7 +175,20 @@ var Engine = (function(global) {
      * the data/properties related to  the object. Do your drawing in your
      * render methods.
      */
+    function checkCollisions(){
+        allEnemies.forEach(function(enemy) {
+
+        if (player.x < enemy.x +  enemy.width  && player.x + player.width  > enemy.x &&
+		player.y < enemy.y +  enemy.height && player.y + player.height > enemy.y) {
+                   player.reset();
+                   gameStatus = "stop";
+        }
+        });
+
+    }
+
     function updateEntities(dt) {
+
         allEnemies.forEach(function(enemy) {
             enemy.update(dt);
         });
@@ -233,10 +243,10 @@ var Engine = (function(global) {
         'images/Ramp North.png',
         'images/Dirt Block.png',
         'images/Ramp West.png',
-        'images/Plain Block.png',
         'images/Rock.png',
-        'images/Wood Block.png',
         'images/Wall Block.png',
+        'images/enemy-bug-left.png',
+        'images/enemy-bug.png',
         'images/Shadow South.png'
     ]);
     Resources.onReady(init);
