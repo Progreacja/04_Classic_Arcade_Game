@@ -217,13 +217,12 @@ Enemy.prototype.update = function(dt) {
     this.location();
     this.picture();
     this.move(dt);
-
-
-
 };
 
-Enemy.prototype.render = function() {
-    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+Enemy.prototype.render = function(now) {
+ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+
+
 };
 
 var playerStatus = "notMoving";
@@ -237,19 +236,15 @@ var Player = function() {
     this.location = "block1";
     this.width =20;
     this.height =40;
+    this.lifeCount = 0;
+    this.keyStatus = 0;
+    this.immortal = 0;
 };
 
-
 Player.prototype.update = function(dt) {
-
-
     this.move(dt);
     this.checkLocation();
 };
-
-
-
-
 
 Player.prototype.move = function(dt) {
 
@@ -282,13 +277,20 @@ Player.prototype.move = function(dt) {
 
 
 Player.prototype.reset = function() {
+    if (this.lifeCount === 0){
     this.x = 503;
     this.y = 460;
+    keyBlock18.status = "onground";}
+    else if(this.lifeCount > 0) {
+        this.immortal = (Date.now()/1000) +2;
+        this.lifeCount = this.lifeCount-1;
+
+    }
 };
 
 
-Player.prototype.render = function() {
-    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+Player.prototype.render = function(now) {
+   ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
 Player.prototype.checkLocation = function() {
@@ -354,14 +356,95 @@ document.addEventListener('keyup', function(e) {
 
 
 
+var Heart = function(x,y) {
+    this.x = x;
+    this.y = y;
+    this.sprite =  'images/Heart.png';
+    this.width =40;
+    this.height =40;
+    this.status ="onground";
+    this.renederStatus = "yes";
+};
+
+Heart.prototype.render = function() {
+ if(this.renederStatus === "yes") {
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+}
+};
+
+Heart.prototype.update = function() {
+    this.checkStatus();
+};
+
+Heart.prototype.checkStatus = function() {
+    if (this.status === "picked" && this.renederStatus === "yes") {
+        player.lifeCount = player.lifeCount + 1;
+        this.renederStatus = "no";
+    }
+};
+
+var LifeCounter = function(x,y) {
+    this.x = x;
+    this.y = y;
+    this.sprite =  'images/Heart.png';
+    this.count = 0 + " x ";
+};
+
+LifeCounter.prototype.render = function() {
+    ctx.font = "40px Arial Black";
+    ctx.fillStyle = "white";
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+    ctx.fillText(this.count,this.x -50,this.y+125);
+    ctx.strokeText(this.count,this.x -50,this.y+125);
+};
+
+LifeCounter.prototype.update = function() {
+    this.count = player.lifeCount + " x ";
+};
+
+
+var Key = function(x,y) {
+    this.x = x;
+    this.y = y;
+    this.sprite =  'images/Key.png';
+    this.width =20;
+    this.height =50;
+    this.status ="onground";
+    this.renederStatus = "yes";
+};
+
+Key.prototype.render = function() {
+    if(this.renederStatus === "yes") {
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);}
+};
+
+Key.prototype.update = function() {
+    this.checkStatus();
+};
+
+Key.prototype.checkStatus = function() {
+    if (this.status === "picked") {
+        player.sprite = 'images/char-pink-girl-holding.png';
+        player.keyStatus = 1;
+        this.renederStatus = "no";
+    }else if (this.status === "onground") {
+        player.sprite = 'images/char-pink-girl.png';
+        player.keyStatus = 0;
+        this.renederStatus = "yes";
+    }
+};
 
 
 var emenyBlock52 = new Enemy(level2markers.block5.x1,level2markers.block2.x2-10,level2markers.block5.y1+20,level2markers.block5.y2,180);
-var emenyBlock8 = new Enemy(level2markers.block8.x1,level2markers.block9.x2,level2markers.block8.y1,level2markers.block8.y2,250);
-var emenyBlock1215 = new Enemy(level2markers.block12.x1,level2markers.block15.x2,level2markers.block13.y1+20,level2markers.block13.y2,180);
+var emenyBlock8 = new Enemy(level2markers.block8.x1,level2markers.block9.x2,level2markers.block8.y1,level2markers.block8.y2,220);
+var emenyBlock1215 = new Enemy(level2markers.block12.x1,level2markers.block15.x2,level2markers.block13.y1+20,level2markers.block13.y2,245);
 
 
 var allEnemies = [emenyBlock52,emenyBlock8,emenyBlock1215];
-
-
+var heartBlock7 = new Heart(5, 325);
+var keyBlock18 = new Key(391,250);
 var player = new Player();
+var iteams = [heartBlock7,keyBlock18];
+
+
+var lifeCounter = new LifeCounter(500,-65);

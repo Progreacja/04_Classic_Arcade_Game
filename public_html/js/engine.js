@@ -13,7 +13,7 @@
  * the canvas' context (ctx) object globally available to make writing app.js
  * a little simpler to work with.
  */
-/* global ctx, player, allEnemies */
+/* global ctx, player, allEnemies, heartBlock7, keyBlock18, iteams, lifeCounter */
 
 
 var level2 = function () {
@@ -130,8 +130,9 @@ var Engine = (function(global) {
         /* Call our update/render functions, pass along the time delta to
          * our update function since it may be used for smooth animation.
          */
-        update(dt);
-        render();
+
+        update(dt,now);
+        render(now);
 
         /* Set our lastTime variable which is used to determine the time delta
          * for the next time this function is called.
@@ -163,9 +164,9 @@ var Engine = (function(global) {
      * functionality this way (you could just implement collision detection
      * on the entities themselves within your app.js file).
      */
-    function update(dt) {
-        updateEntities(dt);
-        checkCollisions();
+    function update(dt,now) {
+        updateEntities(dt,now);
+        checkCollisions(now);
     }
 
     /* This is called by the update function  and loops through all of the
@@ -175,15 +176,23 @@ var Engine = (function(global) {
      * the data/properties related to  the object. Do your drawing in your
      * render methods.
      */
-    function checkCollisions(){
+    function checkCollisions(now){
+        if (player.immortal < (now/1000)){
         allEnemies.forEach(function(enemy) {
-
         if (player.x < enemy.x +  enemy.width  && player.x + player.width  > enemy.x &&
 		player.y < enemy.y +  enemy.height && player.y + player.height > enemy.y) {
                    player.reset();
-                   gameStatus = "stop";
         }
         });
+    }
+        iteams.forEach(function(item) {
+
+        if (player.x < item.x +  item.width  && player.x + player.width  > item.x &&
+		player.y < item.y +  item.height && player.y + player.height > item.y) {
+                   item.status="picked";
+        }
+        });
+
 
     }
 
@@ -193,31 +202,37 @@ var Engine = (function(global) {
             enemy.update(dt);
         });
         player.update(dt);
+        heartBlock7.update();
+        keyBlock18.update();
+        lifeCounter.update();
+
     }
 
 
-    function render() {
+    function render(now) {
 
             /*Background*/
         level2();
 
 
-        renderEntities();
+        renderEntities(now);
     }
 
     /* This function is called by the render function and is called on each game
      * tick. It's purpose is to then call the render functions you have defined
      * on your enemy and player entities within app.js
      */
-    function renderEntities() {
+    function renderEntities(now) {
         /* Loop through all of the objects within the allEnemies array and call
          * the render function you have defined.
          */
         allEnemies.forEach(function(enemy) {
             enemy.render();
         });
-
-        player.render();
+        heartBlock7.render();
+        keyBlock18.render();
+        player.render(now);
+        lifeCounter.render();
     }
 
     /* This function does nothing but it could have been a good place to
@@ -247,7 +262,11 @@ var Engine = (function(global) {
         'images/Wall Block.png',
         'images/enemy-bug-left.png',
         'images/enemy-bug.png',
+        'images/Heart.png',
+        'images/Key.png',
+        'images/char-pink-girl-holding.png',
         'images/Shadow South.png'
+
     ]);
     Resources.onReady(init);
 
