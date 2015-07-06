@@ -16,82 +16,146 @@
 /* global ctx, player, allEnemies, heartBlock7, keyBlock18, iteams, lifeCounter */
 
 
+var level1 = function () {
+    for (col = 0; col < 5; col++) {
+        ctx.drawImage(Resources.get('images/water-block.png'), col * 101, -30);
+    }
+    ctx.drawImage(Resources.get('images/Ramp South.png'), 5 * 101, -40);
+
+    /*First Row */
+    for (col = 0; col <6; col++) {
+        ctx.drawImage(Resources.get('images/stone-block.png'), col * 101, 50);
+    }
+ /*Second Row */
+    for (col = 0; col < 3; col++) {
+        ctx.drawImage(Resources.get('images/grass-block.png'), col * 101, 125);
+    }
+    for (col = 3; col < 6; col++) {
+        ctx.drawImage(Resources.get('images/water-block.png'), col * 101, 130);
+    }
+    for (col = 0; col < 6; col++) {
+        ctx.drawImage(Resources.get('images/grass-block.png'), col * 101, 205);
+    }
+ /*Third Row */
+
+    for (col = 3; col < 6; col++) {
+        ctx.drawImage(Resources.get('images/grass-block.png'), col * 101, 285);
+    }
+    for (col = 0; col < 3; col++) {
+        ctx.drawImage(Resources.get('images/Shadow North.png'), col * 101, 283);
+    }
+    ctx.drawImage(Resources.get('images/Shadow South West.png'), 300, 205);
+
+/*HOUSE*/
+    ctx.drawImage(Resources.get('images/Roof North West.png'), 0 * 101, 240);
+    ctx.drawImage(Resources.get('images/Roof North.png'), 1 * 101, 240);
+    ctx.drawImage(Resources.get('images/Roof North East.png'), 2 * 101, 240);
+    ctx.drawImage(Resources.get('images/Wood Block.png'), 0 * 101, 460);
+    ctx.drawImage(Resources.get('images/Wood Block.png'), 2 * 101, 460);
+    ctx.drawImage(Resources.get('images/Window Tall.png'), 0 * 101, 420);
+    ctx.drawImage(Resources.get('images/Door Tall Closed.png'), 1 * 101, 470);
+    ctx.drawImage(Resources.get('images/Window Tall.png'), 2 * 101, 420);
+    ctx.drawImage(Resources.get('images/Wood Block.png'), 1 * 101, 365);
+
+
+    ctx.drawImage(Resources.get('images/Roof South West.png'), 0 * 101, 320);
+    ctx.drawImage(Resources.get('images/Roof South.png'), 1 * 101, 320);
+    ctx.drawImage(Resources.get('images/Roof South East.png'), 2 * 101, 320);
+
+    for (col = 0; col < 3; col++) {
+        ctx.drawImage(Resources.get('images/Shadow South.png'), col * 101, 400);
+    }
+
+    ctx.drawImage(Resources.get('images/Shadow West.png'), 300, 283);
+
+
+    for (col = 3; col < 6; col++) {
+        ctx.drawImage(Resources.get('images/grass-block.png'), col * 101, 363);
+    }
+    ctx.drawImage(Resources.get('images/Shadow West.png'), 300, 363);
+/*Sixth Row */
+
+    for (col = 3; col < 6; col++) {
+        ctx.drawImage(Resources.get('images/grass-block.png'), col * 101, 444);
+    }
+    ctx.drawImage(Resources.get('images/Shadow West.png'), 300, 444);
+
+    ctx.drawImage(Resources.get('images/Shadow North.png'), 3 * 101, 467);
+    ctx.drawImage(Resources.get('images/Shadow North.png'), 5 * 101, 467);
+    ctx.drawImage(Resources.get('images/Wall Block.png'), 3 * 101, 465);
+    ctx.drawImage(Resources.get('images/Ramp North.png'), 4 * 101, 487);
+
+    ctx.drawImage(Resources.get('images/Wall Block.png'), 5 * 101, 465);
+
+    for (col = 0; col < 6; col++) {
+        ctx.drawImage(Resources.get('images/stone-block.png'), col * 101, 572);
+    }
+
+/*trees*/
+
+    ctx.drawImage(Resources.get('images/Tree Ugly.png'), 505, 175);
+    ctx.drawImage(Resources.get('images/Tree Short.png'), 305, 345);
+
+};
 var level2 = function () {
+    for (col = 0; col < 6; col++) {
+        ctx.drawImage(Resources.get('images/water-block.png'), col * 101, -30);
+    }
 
+    /*First Row */
+    for (col = 0; col <6; col++) {
+        ctx.drawImage(Resources.get('images/Dirt Block.png'), col * 101, 30);
+    }
 
-            for (col = 0; col < 6; col++) {
-                ctx.drawImage(Resources.get('images/water-block.png'), col * 101, -30);
-            }
+    /*Second Row */
+    for (col = 0; col < 6; col++) {
+        ctx.drawImage(Resources.get('images/grass-block.png'), col * 101, 115);
+    }
+    ctx.drawImage(Resources.get('images/Rock.png'), 3 * 101, 80);
+    ctx.drawImage(Resources.get('images/Rock.png'), 4 * 101, 80);
 
-               /*First Row */
+    /*Third Row */
+     for (col = 0; col < 2; col++) {
+        ctx.drawImage(Resources.get('images/water-block.png'), col * 101, 200);
+    }
+    ctx.drawImage(Resources.get('images/Wall Block.png'), 2*101, 190);
 
+    for (col = 3; col < 5; col++) {
+        ctx.drawImage(Resources.get('images/water-block.png'), col * 101, 200);
+    }
+    ctx.drawImage(Resources.get('images/Wall Block.png'), 5*101, 190);
 
-            for (col = 0; col <6; col++) {
-                ctx.drawImage(Resources.get('images/Dirt Block.png'), col * 101, 30);
-            }
+     /*Fourth Row */
+    for (col = 0; col < 3; col++) {
+        ctx.drawImage(Resources.get('images/grass-block.png'), col * 101, 275);
+    }
+    for (col = 4; col < 6; col++) {
+        ctx.drawImage(Resources.get('images/grass-block.png'), col * 101, 275);
+    }
+    ctx.drawImage(Resources.get('images/water-block.png'), 3 * 101, 275);
 
+      /*Fifth Row */
+    for (col = 0; col < 3; col++) {
+        ctx.drawImage(Resources.get('images/grass-block.png'), col * 101, 355);
+    }
+    ctx.drawImage(Resources.get('images/Ramp North.png'), 2 * 101, 352);
+    for (col = 3; col < 6; col++) {
+        ctx.drawImage(Resources.get('images/water-block.png'), col * 101, 355);
+    }
 
+    /*Sixth Row */
+    for (col = 0; col < 2; col++) {
+        ctx.drawImage(Resources.get('images/Shadow South.png'), col * 101, 390);
+    }
+    for (col = 0; col < 6; col++) {
+        ctx.drawImage(Resources.get('images/stone-block.png'), col * 101, 435);
+    }
 
-             /*Second Row */
-
-
-             for (col = 0; col < 6; col++) {
-                ctx.drawImage(Resources.get('images/grass-block.png'), col * 101, 115);
-            }
-
-                ctx.drawImage(Resources.get('images/Rock.png'), 3 * 101, 80);
-                ctx.drawImage(Resources.get('images/Rock.png'), 4 * 101, 80);
-
-              /*Third Row */
-             for (col = 0; col < 2; col++) {
-                ctx.drawImage(Resources.get('images/water-block.png'), col * 101, 200);
-            }
-
-               ctx.drawImage(Resources.get('images/Wall Block.png'), 2*101, 190);
-
-
-            for (col = 3; col < 5; col++) {
-                ctx.drawImage(Resources.get('images/water-block.png'), col * 101, 200);
-            }
-
-            ctx.drawImage(Resources.get('images/Wall Block.png'), 5*101, 190);
-             /*Fourth Row */
-
-            for (col = 0; col < 3; col++) {
-                ctx.drawImage(Resources.get('images/grass-block.png'), col * 101, 275);
-            }
-            for (col = 4; col < 6; col++) {
-                ctx.drawImage(Resources.get('images/grass-block.png'), col * 101, 275);
-            }
-
-            ctx.drawImage(Resources.get('images/water-block.png'), 3 * 101, 275);
-
-              /*Fifth Row */
-
-                          for (col = 0; col < 3; col++) {
-                ctx.drawImage(Resources.get('images/grass-block.png'), col * 101, 355);
-            }
-
-             ctx.drawImage(Resources.get('images/Ramp North.png'), 2 * 101, 352);
-
-                for (col = 3; col < 6; col++) {
-                ctx.drawImage(Resources.get('images/water-block.png'), col * 101, 355);
-            }
-
-            /*Sixth Row */
-            for (col = 0; col < 2; col++) {
-                ctx.drawImage(Resources.get('images/Shadow South.png'), col * 101, 390);
-            }
-
-            for (col = 0; col < 6; col++) {
-                ctx.drawImage(Resources.get('images/stone-block.png'), col * 101, 435);
-            }
-              /*Seventh Row */
-          for (col = 0; col < 5; col++) {
-               ctx.drawImage(Resources.get('images/water-block.png'), col * 101, 550);
-            }
-            ctx.drawImage(Resources.get('images/Ramp South.png'), 5 * 101, 515);
-
+    /*Seventh Row */
+    for (col = 0; col < 5; col++) {
+       ctx.drawImage(Resources.get('images/water-block.png'), col * 101, 550);
+    }
+    ctx.drawImage(Resources.get('images/Ramp South.png'), 5 * 101, 515);
 };
 
 var gameStatus = "play";
@@ -196,42 +260,47 @@ var Engine = (function(global) {
 
     }
 
-    function updateEntities(dt) {
+    function updateEntities(dt,now) {
 
         allEnemies.forEach(function(enemy) {
             enemy.update(dt);
         });
-        player.update(dt);
-        heartBlock7.update();
-        keyBlock18.update();
+        player.update(dt,now);
+        iteams.forEach(function(item) {
+            item.update();
+        });
+
         lifeCounter.update();
 
     }
 
 
-    function render(now) {
+    function render() {
 
             /*Background*/
-        level2();
+
+        level1();
 
 
-        renderEntities(now);
+        renderEntities();
     }
 
     /* This function is called by the render function and is called on each game
      * tick. It's purpose is to then call the render functions you have defined
      * on your enemy and player entities within app.js
      */
-    function renderEntities(now) {
+    function renderEntities() {
         /* Loop through all of the objects within the allEnemies array and call
          * the render function you have defined.
          */
         allEnemies.forEach(function(enemy) {
             enemy.render();
         });
-        heartBlock7.render();
-        keyBlock18.render();
-        player.render(now);
+        iteams.forEach(function(item) {
+            item.render();
+        });
+
+        player.render();
         lifeCounter.render();
     }
 
@@ -265,6 +334,22 @@ var Engine = (function(global) {
         'images/Heart.png',
         'images/Key.png',
         'images/char-pink-girl-holding.png',
+        'images/char-pink-girl-immortal.png',
+        'images/Roof North East.png',
+        'images/Roof North West.png',
+        'images/Roof South East.png',
+        'images/Roof South West.png',
+        'images/Roof South.png',
+        'images/Window Tall.png',
+        'images/Door Tall Closed.png',
+        'images/Roof North.png',
+        'images/Wood Block.png',
+        'images/Shadow North.png',
+        'images/Shadow West.png',
+        'images/Shadow South West.png',
+        'images/Tree Short.png',
+        'images/Tree Tall.png',
+        'images/Tree Ugly.png',
         'images/Shadow South.png'
 
     ]);
