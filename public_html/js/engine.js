@@ -13,14 +13,19 @@
  * the canvas' context (ctx) object globally available to make writing app.js
  * a little simpler to work with.
  */
-/* global ctx, player, allEnemies, heartBlock7, keyBlock18, iteams, lifeCounter */
+/* global ctx, player, allEnemies, heartBlock7, keyBlock18, iteams, lifeCounter, lifeCounter2 */
 
 
 var level1 = function () {
+    for (col = 0; col < 6; col++) {
+        ctx.drawImage(Resources.get('images/water-block.png'), col * 101, -50);
+    }
+
     for (col = 0; col < 5; col++) {
         ctx.drawImage(Resources.get('images/water-block.png'), col * 101, -30);
     }
-    ctx.drawImage(Resources.get('images/Ramp South.png'), 5 * 101, -40);
+
+    ctx.drawImage(Resources.get('images/Ramp South.png'), 5 * 101, -50);
 
     /*First Row */
     for (col = 0; col <6; col++) {
@@ -99,7 +104,7 @@ var level1 = function () {
 };
 var level2 = function () {
     for (col = 0; col < 6; col++) {
-        ctx.drawImage(Resources.get('images/water-block.png'), col * 101, -30);
+        ctx.drawImage(Resources.get('images/water-block.png'), col * 101, -50);
     }
 
     /*First Row */
@@ -229,7 +234,7 @@ var Engine = (function(global) {
      * on the entities themselves within your app.js file).
      */
     function update(dt,now) {
-        updateEntities(dt,now);
+        updateEntities(dt);
         checkCollisions(now);
     }
 
@@ -260,12 +265,12 @@ var Engine = (function(global) {
 
     }
 
-    function updateEntities(dt,now) {
+    function updateEntities(dt) {
 
         allEnemies.forEach(function(enemy) {
             enemy.update(dt);
         });
-        player.update(dt,now);
+        player.update(dt);
         iteams.forEach(function(item) {
             item.update();
         });
@@ -278,8 +283,12 @@ var Engine = (function(global) {
     function render() {
 
             /*Background*/
+        if(player.level === "level1"){
+            level1();
+        } else if (player.level === "level2") {
+            level2();
+        }
 
-        level1();
 
 
         renderEntities();
@@ -301,8 +310,13 @@ var Engine = (function(global) {
         });
 
         player.render();
+
+
+
         lifeCounter.render();
-    }
+
+    };
+
 
     /* This function does nothing but it could have been a good place to
      * handle game reset states - maybe a new game menu or a game over screen
@@ -320,7 +334,6 @@ var Engine = (function(global) {
         'images/stone-block.png',
         'images/water-block.png',
         'images/grass-block.png',
-        'images/char-princess-girl.png',
         'images/char-pink-girl.png',
         'images/Ramp South.png',
         'images/Ramp East.png',
@@ -350,6 +363,7 @@ var Engine = (function(global) {
         'images/Tree Short.png',
         'images/Tree Tall.png',
         'images/Tree Ugly.png',
+        'images/Selector.png',
         'images/Shadow South.png'
 
     ]);

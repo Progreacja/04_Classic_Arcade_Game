@@ -1,4 +1,4 @@
-/* global ctx, global */
+/* global ctx, global, keyBlock18 */
 
 
 var gameStatus = "play";
@@ -7,31 +7,31 @@ var level1markers = {
     block1 : {
     x1 : -10,
     x2 : 392,
-    y1 : 514,
+    y1 : 506,
     y2 : 517
     },
     block2 : {
     x1 : 392,
     x2 : 413,
-    y1 : 514,
+    y1 : 506,
     y2 : 517
     },
     block3 : {
     x1 : 413,
     x2 : 515,
-    y1 : 514,
+    y1 : 506,
     y2 : 517
     },
     block4 : {
-    x1 : 392,
-    x2 : 413,
+    x1 : 365,
+    x2 : 425,
     y1 : 368,
-    y2 : 515
+    y2 : 506
     },
     block5 : {
-    x1 : 392,
+    x1 : 365,
     x2 : 413,
-    y1 : 260,
+    y1 : 275,
     y2 : 368
     },
     block6 : {
@@ -41,26 +41,26 @@ var level1markers = {
     y2 : 368
     },
     block7 : {
-    x1 : 421,
+    x1 : 435,
     x2 : 515,
-    y1 : 222,
+    y1 : 189,
     y2 : 260
     },
     block8 : {
-    x1 : 392,
-    x2 : 421,
+    x1 : 365,
+    x2 : 435,
     y1 : 189,
-    y2 : 260
+    y2 : 275
     },
     block9 : {
     x1 : 295,
-    x2 : 392,
+    x2 : 365,
     y1 : 189,
-    y2 : 295
+    y2 : 275
     },
     block10 : {
     x1 : 229,
-    x2 : 421,
+    x2 : 435,
     y1 : 145,
     y2 : 189
     },
@@ -97,7 +97,7 @@ var level1markers = {
     block16 : {
     x1 : 476,
     x2 : 515,
-    y1 : -50,
+    y1 : -60,
     y2 : -15
     }
 };
@@ -194,9 +194,6 @@ var level2markers = {
     x2 : 515,
     y1 : 206,
     y2 : 265}
-
-
-
 };
 
 
@@ -217,6 +214,60 @@ Levelblocks.prototype.addBlock = function(left, right, up, down) {
   var numOfBlocks = Object.keys(this.blocks).length + 1;
   this.blocks['block' + numOfBlocks] = new Block(left, right, up, down);
 };
+
+var level1Blocks = new Levelblocks();
+
+//block1
+level1Blocks.addBlock(-10, undefined, 514, 517);
+
+//block2
+level1Blocks.addBlock(undefined, undefined, undefined, 517);
+
+//block3
+level1Blocks.addBlock(undefined, 515, 514, 517);
+
+//block4
+level1Blocks.addBlock(370, 420, undefined, undefined);
+
+//block5
+level1Blocks.addBlock(370, undefined, undefined, undefined);
+
+//block6
+level1Blocks.addBlock(undefined, 515, undefined, 368);
+
+//block7
+level1Blocks.addBlock(undefined, 515, 190, undefined);
+
+//block8
+level1Blocks.addBlock(undefined, undefined, undefined, undefined);
+
+//block9
+level1Blocks.addBlock(295, undefined, undefined, 275);
+
+//block10
+level1Blocks.addBlock(undefined, 435, 145, undefined);
+
+//block11
+level1Blocks.addBlock(-10, undefined, undefined, 189);
+
+//block12
+level1Blocks.addBlock(-10, 229, undefined, undefined);
+
+//block13
+level1Blocks.addBlock(-10, undefined, -15, undefined);
+
+//block14
+level1Blocks.addBlock(undefined, undefined, -15, 35);
+
+//block15
+level1Blocks.addBlock(undefined, 515, undefined, 35);
+
+//block16
+level1Blocks.addBlock(476, 515, -60, undefined);
+
+
+
+
 
 var level2Blocks = new Levelblocks();
 
@@ -275,7 +326,8 @@ level2Blocks.addBlock(undefined, 515, undefined, 265);
 level2Blocks.addBlock(371, undefined, 206, 265);
 
 
-var level1Blocks = new Levelblocks();
+
+
 
 
 var Enemy = function(x1, x2, y1, y2, rate) {
@@ -286,7 +338,7 @@ var Enemy = function(x1, x2, y1, y2, rate) {
     this.x1 = x1;
     this.x2 = x2;
     this.sprite = 'images/enemy-bug.png';
-    this.width = 40;
+    this.width = 45;
     this.height = 20;
 };
 
@@ -332,12 +384,11 @@ var Player = function() {
     this.x = 0;
     this.y = 515;
     this.sprite = 'images/char-pink-girl.png';
-    this.reset();
     this.state = "stand";
     this.location = "block1";
     this.width =20;
     this.height =40;
-    this.lifeCount = 1;
+    this.lifeCount = 0;
     this.keyStatus = 0;
     this.immortal = 0;
     this.level = "level1";
@@ -345,42 +396,52 @@ var Player = function() {
     this.levelBlocks = level1Blocks;
 };
 
-Player.prototype.update = function(dt, now) {
+Player.prototype.update = function(dt) {
     this.move(dt);
     this.checkLocation();
-    this.picUpdate(dt);
+    this.picUpdate();
+    this.levelCheck();
+};
+
+Player.prototype.levelCheck = function() {
+    if(this.level === "level1") {
+        this.levelMarkers = level1markers;
+        this.levelBlocks = level1Blocks;
+        allEnemies = allEnemies1;
+        iteams = iteams1;
+    }else if (this.level === "level2") {
+        this.levelMarkers = level2markers;
+        this.levelBlocks = level2Blocks;
+        allEnemies = allEnemies2;
+        iteams = iteams2;}
 };
 
 
 
-// && (this.x-3) > this.levelBlocks.blocks[this.location].left
-//  && (this.x+3) <  this.levelBlocks.blocks[this.location].right
-//  && (this.y+3) < this.levelBlocks.blocks[this.location].down
-//   && (this.y-3) > this.levelBlocks.blocks[this.location].up
 
 Player.prototype.move = function(dt) {
 
    if(this.state === "move_left"
-          ){
+        && (this.x-3) > this.levelBlocks.blocks[this.location].left){
 
        this.x = this.x - (dt * 180);
        console.log(this.x, this.y);
        console.log(this.location);
    }
   if(this.state === "move_right"
-        ){
+        && (this.x+3) <  this.levelBlocks.blocks[this.location].right){
        this.x = this.x + (dt * 180);
        console.log(this.x, this.y);
        console.log(this.location);
    }
   if(this.state === "move_down"
-        ){
+        && (this.y+3) < this.levelBlocks.blocks[this.location].down){
        this.y = this.y + (dt * 180);
        console.log(this.x, this.y);
        console.log(this.location);
    }
   if(this.state === "move_up"
-          ){
+        && (this.y-3) > this.levelBlocks.blocks[this.location].up){
        this.y = this.y - (dt * 180);
        console.log(this.x, this.y);
        console.log(this.location);
@@ -404,8 +465,9 @@ Player.prototype.picUpdate = function(dt) {
 
 Player.prototype.reset = function() {
     if (this.lifeCount === 0){
-    this.x = 503;
-    this.y = 460;
+    this.level = "level1";
+    this.x = 0;
+    this.y = 515;
     keyBlock18.status = "onground";}
     else if(this.lifeCount > 0) {
         this.immortal = (Date.now()/1000) +2;
@@ -425,7 +487,7 @@ Player.prototype.checkLocation = function() {
                 this.y > this.levelMarkers[each].y1 && this.y<this.levelMarkers[each].y2) {
                     this.location = each;
                     break;
-                                    }
+                    }
         }
 };
 
@@ -558,26 +620,84 @@ Key.prototype.checkStatus = function() {
     }
 };
 
+var Selector = function(x,y) {
+    this.x = x;
+    this.y = y;
+    this.sprite =  'images/Selector.png';
+    this.width =80;
+    this.height =50;
+    this.status ="onground";
+    this.renederStatus = "yes";
+};
 
-var emenyBlock52 = new Enemy(level2markers.block5.x1,level2markers.block2.x2-10,level2markers.block5.y1+20,level2markers.block5.y2,180);
-var emenyBlock8 = new Enemy(level2markers.block8.x1,level2markers.block9.x2,level2markers.block8.y1-20,level2markers.block8.y2,220);
-var emenyBlock1215 = new Enemy(level2markers.block12.x1,level2markers.block15.x2,level2markers.block13.y1+20,level2markers.block13.y2,245);
+Selector.prototype.render = function() {
+    if(this.renederStatus === "yes") {
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);}
+};
+
+Selector.prototype.update = function() {
+    this.checkStatus();
+};
+
+var level1Selector = new Selector(505,-75);
+var level2Selector = new Selector(505,480);
+
+level1Selector.checkStatus = function() {
+    if (this.status === "picked" && player.level === "level1" && this.renederStatus === "yes") {
+        player.level = "level2";
+        player.x = 503;
+        player.y = 470;
+        this.renederStatus = "no";
+
+    }
+};
 
 
-var allEnemies2 = [emenyBlock52,emenyBlock8,emenyBlock1215];
-var allEnemies1 = [];
+
+level2Selector.checkStatus = function() {
+    if (player.keyStatus === 0) {
+        this.renederStatus = "no";
+        this.status ="onground";
+    } else if (player.keyStatus === 1 && player.level === "level2") {
+        this.renederStatus = "yes";
+
+        if (this.status === "picked") {
+        player.level = "level1";
+        player.x = 500;
+        player.y = -60;
+        this.renederStatus = "no";
+
+    }}
+
+};
+
+
+
+var enemy1Block56 = new Enemy(level1markers.block5.x1,level1markers.block6.x2,level1markers.block5.y1+10,level1markers.block5.y2,130);
+var enemy1Block1315 = new Enemy(level1markers.block13.x1,level1markers.block15.x2-10,level1markers.block13.y1+30,level1markers.block13.y2-10,220);
+var enemy1Block1110 = new Enemy(level1markers.block11.x1,level1markers.block10.x2,level1markers.block10.y1,level1markers.block10.y2,200);
+
+var enemy2Block52 = new Enemy(level2markers.block5.x1,level2markers.block2.x2-10,level2markers.block5.y1+20,level2markers.block5.y2,180);
+var enemy2Block8 = new Enemy(level2markers.block8.x1,level2markers.block9.x2,level2markers.block8.y1-20,level2markers.block8.y2,220);
+var enemy2Block1215 = new Enemy(level2markers.block12.x1,level2markers.block15.x2,level2markers.block13.y1+20,level2markers.block13.y2,245);
+
+
+var allEnemies2 = [enemy2Block52,enemy2Block8,enemy2Block1215];
+var allEnemies1 = [enemy1Block1110,enemy1Block1315,enemy1Block56];
 var allEnemies = [];
 
-var heartBlock7 = new Heart(5, 325);
+
+
+var heart2Block7 = new Heart(5, 325);
+var heart1Block11 = new Heart(0, 100);
 var keyBlock18 = new Key(391,250);
 var player = new Player();
 
 
-var iteams2 = [heartBlock7,keyBlock18];
-var iteams1 = [];
+var iteams2 = [heart2Block7,keyBlock18,level2Selector];
+var iteams1 = [heart1Block11,level1Selector];
 var iteams =[];
 
 
 
-var lifeCounter = new LifeCounter(70,-55);
-var lifeCounter2 = new LifeCounter(500,-65);
+var lifeCounter = new LifeCounter(70,-75);
