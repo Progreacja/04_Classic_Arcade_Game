@@ -2,15 +2,47 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Effective JavaScript: Frogger</title>
+    <title>Find The Key - Arcade Game</title>
+     <link href="css/normalize.css" rel="stylesheet" type="text/css">
+     <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+     <script src="js/resources.js"></script>
+     <script src="js/app.js"></script>
+     <link href='http://fonts.googleapis.com/css?family=Istok+Web:400,400italic|Sigmar+One' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+    <div class="main">
+    <header>
+    <h1>Find The Key - Arcade Game</h1>
+    <h2>Game for Udacity Front-End Nanodegree</h2>
+    </header>
 
-    <script src="js/resources.js"></script>
-    <script src="js/app.js"></script>
+
+    <div class="menu">
+            <p><a href="" onclick="return false;" id="play">Play</a></p>
+            <div id="canvas"></div>
+            <p><a href="" onclick="return false;" id="instruc">Instructions</a></p>
+            <div id="instrucList">
+                <ul>
+                    <li>Follow the star marker<img src="images/Selector.png" alt="star marker" class="pic"></li>
+                    <li><img src="images/Navigation keys.png" alt="star marker" class="pic">Use arrow keys to navigate</li>
+                    <li>Press <kbd>SPACE</kbd> to pause the game</li>
+                </ul>
+            </div>
+    </div>
+
+
+
     <script src="js/engine.js"></script>
 
+
+    <footer>
+        <a href="https://www.linkedin.com/in/lewandowskijedrzej" target="_blank"><img src="images/Linkedin2.png" alt="Linkedin Logo" class="social-icon"></a>
+        <a href="https://www.facebook.com/LewandowskiJedrzej" target="_blank"><img src="images/facebook-Icon2.png" alt="Facebook Logo" class="social-icon"></a>
+        <a href="https://github.com/Progreacja" target="_blank"><img src="images/git_logo.png" alt="GitHub Logo" class="social-icon"></a>
+        <p>&copy; 2014 Jedrzej Lewandowski</p>
+    </footer>
+    </div>
 </body>
 
 

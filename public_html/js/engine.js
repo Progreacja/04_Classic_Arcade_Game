@@ -13,7 +13,7 @@
  * the canvas' context (ctx) object globally available to make writing app.js
  * a little simpler to work with.
  */
-/* global ctx, player, allEnemies, heartBlock7, keyBlock18, iteams, lifeCounter, lifeCounter2 */
+/* global ctx, player, allEnemies, heartBlock7, keyBlock18, iteams, lifeCounter, lifeCounter2, newGame */
 
 
 var level1 = function () {
@@ -163,25 +163,26 @@ var level2 = function () {
     ctx.drawImage(Resources.get('images/Ramp South.png'), 5 * 101, 515);
 };
 
-var gameStatus = "play";
 
 
 
-var Engine = (function(global) {
-    /* Predefine the variables we'll be using within this scope,
-     * create the canvas element, grab the 2D context for that canvas
-     * set the canvas elements height/width and add it to the DOM.
-     */
-    var doc = global.document,
-        win = global.window,
-        canvas = doc.createElement('canvas'),
+
+    var canvas = document.createElement('canvas'),
         ctx = canvas.getContext('2d'),
         lastTime;
 
     canvas.width = 606;
     canvas.height = 664;
 
-    doc.body.appendChild(canvas);
+
+var Engine = (function() {
+    /* Predefine the variables we'll be using within this scope,
+     * create the canvas element, grab the 2D context for that canvas
+     * set the canvas elements height/width and add it to the DOM.
+     */
+
+
+    $("#canvas").append(canvas);
 
     /* This function serves as the kickoff point for the game loop itself
      * and handles properly calling the update and render methods.
@@ -193,15 +194,16 @@ var Engine = (function(global) {
          * would be the same for everyone (regardless of how fast their
          * computer is) - hurray time!
          */
+
         var now = Date.now(),
             dt = (now - lastTime) / 1000.0;
 
         /* Call our update/render functions, pass along the time delta to
          * our update function since it may be used for smooth animation.
          */
-
+        if(newGame.gameRun === true && newGame.paused === false){
         update(dt,now);
-        render(now);
+        render(now);}
 
         /* Set our lastTime variable which is used to determine the time delta
          * for the next time this function is called.
@@ -211,7 +213,7 @@ var Engine = (function(global) {
         /* Use the browser's requestAnimationFrame function to call this
          * function again as soon as the browser is able to draw another frame.
          */
-        win.requestAnimationFrame(main);
+        window.requestAnimationFrame(main);
     };
 
     /* This function does some initial setup that should only occur once,
@@ -234,6 +236,7 @@ var Engine = (function(global) {
      * on the entities themselves within your app.js file).
      */
     function update(dt,now) {
+
         updateEntities(dt);
         checkCollisions(now);
     }
@@ -317,14 +320,33 @@ var Engine = (function(global) {
 
     };
 
+    function textDrawer (text, x , y) {
+        ctx.font = "36px Sigmar One";
+        ctx.textAlign = 'center';
+        ctx.strokeStyle = "black";
+        ctx.lineWidth = 3;
+        ctx.strokeText(text, x, y);
+        ctx.fillStyle = "white";
+        ctx.fillText(text, x, y);
+    }
+
 
     /* This function does nothing but it could have been a good place to
      * handle game reset states - maybe a new game menu or a game over screen
      * those sorts of things. It's only called once by the init() method.
      */
     function reset() {
-        // noop
+
+        textDrawer ("Press SPACE to start",canvas.width/2,canvas.height/2);
+        if (newGame.gameRun === true){
+        window.cancelAnimationFrame(reset);
     }
+
+ 
+    window.requestAnimationFrame(reset);
+    }
+
+
 
     /* Go ahead and load all of the images we know we're going to need to
      * draw our game level. Then set init as the callback method, so that when
@@ -373,5 +395,15 @@ var Engine = (function(global) {
      * object when run in a browser) so that developer's can use it more easily
      * from within their app.js files.
      */
-    global.ctx = ctx;
-})(this);
+
+});
+
+$("#play").click(function() {
+    Engine();
+    $("#play").hide();
+    $(".menu").css("margin-top",0);
+});
+
+$("#instruc").click(function() {
+    $("#instrucList").slideToggle("slow");
+});

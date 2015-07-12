@@ -1,3 +1,92 @@
-body {
+html,body {
     text-align: center;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+.main {
+    position: relative; /* needed for footer positioning*/
+    margin: 0 auto; /* center, not in IE5 */
+    height: auto !important; /* real browsers */
+    height: 100%; /* IE6: treaded as min-height*/
+    max-width: 950px;
+    min-height: 100%; /* real browsers */
+}
+
+p {
+    padding: 0;
+    margin: 0;
+}
+ul {
+   font-family: 'Istok Web', sans-serif;
+   font-style: italic;
+   font-size: 0.6em;
+   padding-left: 0;
+   list-style-type: none;
+}
+li {
+    padding-top: 10px;
+}
+
+h1 {
+   font-family: 'Sigmar One', cursive;
+   font-size: 2em;
+   color: cornflowerblue;
+}
+
+h2 {
+   font-family: 'Istok Web', sans-serif;
+   font-style: italic;
+   font-size: 1em;
+   color: #c0c0c0;
+}
+
+a,
+a:visited {
+    text-decoration: none;
+    color: chocolate;
+}
+a:hover {
+    color: cornflowerblue;
+}
+
+.menu {
+    margin-top: 10%;
+    font-size: 2em;
+    padding-bottom: 10%;
+    font-family: 'Sigmar One', cursive;
+}
+
+footer {
+    font-size: 0.78em;
+    text-align: center;
+    clear: both;
+    color: #ccc;
+    position:absolute;
+    width:100%;
+    bottom:0;
+}
+
+
+.pic {
+    width: 50px;
+    margin: 0 20px;
+}
+
+.social-icon {
+    transition: 0.5s ease-in-out;
+    width: 40px;
+    margin: 0 10px;
+}
+
+.social-icon:hover{
+    -webkit-transform: scale(1.2,1.2);
+    -moz-transform: scale(1.2,1.2);
+    -o-transform: scale(1.2,1.2);
+    transform: scale(1.2,1.2);
+}
+
+#instrucList {
+    display: none;
 }

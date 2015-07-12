@@ -1,7 +1,7 @@
 /* global ctx, global, keyBlock18 */
 
 
-var gameStatus = "play";
+
 
 var level1markers = {
     block1 : {
@@ -374,10 +374,22 @@ Enemy.prototype.update = function(dt) {
 
 Enemy.prototype.render = function(now) {
 ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-
-
 };
 
+var Game = function() {
+    this.gameRun = false;
+    this.paused = false;
+};
+
+Game.prototype.handleInput = function(key) {
+    if (key === "spacebar" && this.gameRun === false) {
+        this.gameRun = true;
+    }else if (key === "spacebar" && this.paused === true)  {
+        this.paused = false;
+    } else if (key === "spacebar" && this.paused === false) {
+        this.paused = true;
+    }
+};
 
 
 var Player = function() {
@@ -495,7 +507,7 @@ Player.prototype.handleInput = function(key) {
     switch(key){
         case "left":
 
-            this.state = "move_left";
+           this.state = "move_left";
            break;
 
        case "right":
@@ -521,26 +533,38 @@ Player.prototype.handleInput = function(key) {
 };
 
 document.addEventListener('keydown', function(e) {
-    var allowedKeys = {
+
+  var  allowedKeys = {
+        32: 'spacebar',
         37: 'left',
         38: 'up',
         39: 'right',
         40: 'down'
-    };
 
-    player.handleInput(allowedKeys[e.keyCode]);
+    };
+    if(e.keyCode === 32){
+    newGame.handleInput(allowedKeys[e.keyCode]);
+    }else{
+
+    player.handleInput(allowedKeys[e.keyCode]);}
+
+   if (e.keyCode in allowedKeys){
+    e.preventDefault();
+  }
+
+
 });
 
 document.addEventListener('keyup', function(e) {
+   if(newGame.gameRun === true ){
     var allowedKeys = {
         37: 'stand',
         38: 'stand',
         39: 'stand',
         40: 'stand'
     };
-
     player.handleInput(allowedKeys[e.keyCode]);
-});
+    }});
 
 
 
@@ -582,8 +606,8 @@ LifeCounter.prototype.render = function() {
     ctx.font = "40px Arial Black";
     ctx.fillStyle = "white";
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-    ctx.fillText(this.count,this.x -50,this.y+125);
-    ctx.strokeText(this.count,this.x -50,this.y+125);
+    ctx.fillText(this.count,this.x -20,this.y+125);
+    ctx.strokeText(this.count,this.x -20,this.y+125);
 };
 
 LifeCounter.prototype.update = function() {
@@ -640,6 +664,7 @@ Selector.prototype.update = function() {
 };
 
 var level1Selector = new Selector(505,-75);
+var level1Selector2 = new Selector(405,495);
 var level2Selector = new Selector(505,480);
 
 level1Selector.checkStatus = function() {
@@ -648,7 +673,14 @@ level1Selector.checkStatus = function() {
         player.x = 503;
         player.y = 470;
         this.renederStatus = "no";
+    }
+};
 
+level1Selector2.checkStatus = function() {
+    if (player.keyStatus === 1 && player.level === "level1") {
+        this.renederStatus = "yes";
+    } else {
+        this.renederStatus = "no";
     }
 };
 
@@ -662,11 +694,10 @@ level2Selector.checkStatus = function() {
         this.renederStatus = "yes";
 
         if (this.status === "picked") {
-        player.level = "level1";
-        player.x = 500;
-        player.y = -60;
-        this.renederStatus = "no";
-
+            player.level = "level1";
+            player.x = 500;
+            player.y = -60;
+            this.renederStatus = "no";
     }}
 
 };
@@ -695,9 +726,11 @@ var player = new Player();
 
 
 var iteams2 = [heart2Block7,keyBlock18,level2Selector];
-var iteams1 = [heart1Block11,level1Selector];
+var iteams1 = [heart1Block11,level1Selector,level1Selector2];
 var iteams =[];
 
 
 
-var lifeCounter = new LifeCounter(70,-75);
+var lifeCounter = new LifeCounter(100,-75);
+
+var newGame = new Game;
