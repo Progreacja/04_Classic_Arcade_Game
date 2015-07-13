@@ -90,3 +90,6 @@ footer {
 #instrucList {
     display: none;
 }
+canvas {
+    max-width: 550px;
+ }
