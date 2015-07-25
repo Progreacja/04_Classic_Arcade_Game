@@ -1,14 +1,14 @@
-/* global ctx */
+/* global ctx, documnet */
 
 var level1markers = {
     block1 : {
     x1 : -10,
-    x2 : 392,
+    x2 : 380,
     y1 : 506,
     y2 : 517
     },
     block2 : {
-    x1 : 392,
+    x1 : 380,
     x2 : 413,
     y1 : 506,
     y2 : 517
@@ -50,7 +50,7 @@ var level1markers = {
     y2 : 275
     },
     block9 : {
-    x1 : 295,
+    x1 : 290,
     x2 : 365,
     y1 : 189,
     y2 : 275
@@ -182,13 +182,13 @@ var level2markers = {
     y1 : 20,
     y2 : 206},
     block17 : {
-    x1 : 455,
+    x1 : 465,
     x2 : 515,
     y1 : 206,
     y2 : 265},
     block18 : {
     x1 : 371,
-    x2 : 515,
+    x2 : 465,
     y1 : 206,
     y2 : 265}
 };
@@ -224,10 +224,10 @@ level1Blocks.addBlock(undefined, undefined, undefined, 517);
 level1Blocks.addBlock(undefined, 515, 514, 517);
 
 //block4
-level1Blocks.addBlock(370, 420, undefined, undefined);
+level1Blocks.addBlock(380, 420, undefined, undefined);
 
 //block5
-level1Blocks.addBlock(370, undefined, undefined, undefined);
+level1Blocks.addBlock(380, undefined, undefined, undefined);
 
 //block6
 level1Blocks.addBlock(undefined, 515, undefined, 368);
@@ -239,7 +239,7 @@ level1Blocks.addBlock(undefined, 515, 190, undefined);
 level1Blocks.addBlock(undefined, undefined, undefined, undefined);
 
 //block9
-level1Blocks.addBlock(295, undefined, undefined, 275);
+level1Blocks.addBlock(290, undefined, undefined, 275);
 
 //block10
 level1Blocks.addBlock(undefined, 435, 145, undefined);
@@ -314,7 +314,7 @@ level2Blocks.addBlock(undefined, undefined, -35, 20);
 level2Blocks.addBlock(undefined, 515, -35, undefined);
 
 //block16
-level2Blocks.addBlock(460, 515, undefined, undefined);
+level2Blocks.addBlock(465, 515, undefined, undefined);
 
 //block17
 level2Blocks.addBlock(undefined, 515, undefined, 265);
@@ -373,18 +373,12 @@ var Game = function() {
     this.gameRun = false;
     this.paused = false;
     this.gameOver = false;
-    this.gameEnd = false;
+    this.endGame = false;
+    this.finishedGame = false;
+    this.displayMessage = true;
 };
 
-Game.prototype.handleInput = function(key) {
-    if (key === "spacebar" && this.gameRun === false) {
-        this.gameRun = true;
-    }else if (key === "spacebar" && this.paused === true)  {
-        this.paused = false;
-    } else if (key === "spacebar" && this.paused === false) {
-        this.paused = true;
-    } else if (key === "enter" && this.gameOver === true) {
-        this.gameOver = false;
+Game.prototype.gameReset = function() {
         player.reset();
         hearts.forEach(function(heart){
             heart.status = "onground";
@@ -392,12 +386,36 @@ Game.prototype.handleInput = function(key) {
         });
         selectors.forEach(function(selector){
             selector.status = "onground";
+            selector.renderStatus = "yes";
         });
+        keyBlock18.status = "onground";
 
+};
+
+Game.prototype.handleInput = function(key) {
+    if (key === "spacebar" && this.gameRun === false) {
+        this.gameRun = true;
+        this.finishedGame = false;
+        this.displayMessage = true;
+        startMessageTime();
+        this.gameReset();
+    }else if (key === "spacebar" && this.paused === true)  {
+        this.paused = false;
+    } else if (key === "spacebar" && this.paused === false && !this.gameOver) {
+        this.paused = true;
+    } else if (key === "spacebar" && this.gameOver === true) {
+        this.gameOver = false;
+        this.gameReset();
     }
 };
 
+var startMessageTime = function(){
+    setTimeout(messageStart, 4000);
+};
 
+var messageStart = function() {
+    newGame.displayMessage = false;
+};
 
 
 var Player = function() {
@@ -473,6 +491,7 @@ Player.prototype.picUpdate = function(dt) {
 
 };
 Player.prototype.reset = function() {
+        this.lifeCount = 0;
         this.keyStatus = 0;
         this.x = 0;
         this.y = 515;
@@ -481,8 +500,7 @@ Player.prototype.reset = function() {
 
 Player.prototype.colision = function() {
     if (this.lifeCount === 0){
-        keyBlock18.status = "onground";
-        this.keyStatus = 0;
+
         newGame.gameOver = true;
 
     }
@@ -490,10 +508,6 @@ Player.prototype.colision = function() {
         this.immortal = (Date.now()/1000) +2;
         this.lifeCount = this.lifeCount-1;
 
-        if(this.level === "level1" && this.keyStatus === 1) {
-            level1Selector.status = "onground";
-            level1Selector.renderStatus = "yes";
-        }
         keyBlock18.status = "onground";
         this.keyStatus = 0;
     }
@@ -653,6 +667,9 @@ level1Selector.checkStatus = function() {
         player.x = 503;
         player.y = 470;
         this.renderStatus = "no";
+    }  else if(player.keyStatus === 0 && player.level === "level1") {
+        this.renderStatus = "yes";
+        this.status = "onground";
     }
 
 };
@@ -662,6 +679,7 @@ level1Selector2.checkStatus = function() {
         this.renderStatus = "yes";
         if(this.status === "picked"){
             newGame.endGame = true;
+            endMessageTime();
         }
     } else if(player.keyStatus === 0) {
         this.renderStatus = "no";
@@ -669,7 +687,15 @@ level1Selector2.checkStatus = function() {
     }
 };
 
+var endMessageTime = function(){
+    setTimeout(endMessage, 6000);
+};
 
+var endMessage = function() {
+    newGame.endGame = false;
+    newGame.finishedGame = true;
+    newGame.gameRun = false;
+};
 
 level2Selector.checkStatus = function() {
     if (player.keyStatus === 0) {
@@ -695,11 +721,10 @@ document.addEventListener('keydown', function(e) {
         37: 'left',
         38: 'up',
         39: 'right',
-        40: 'down',
-        13: 'enter'
+        40: 'down'
     };
 
-    if(e.keyCode === 32 || e.keyCode === 13){
+    if(e.keyCode === 32){
     newGame.handleInput(allowedKeys[e.keyCode]);
     }else {
     player.handleInput(allowedKeys[e.keyCode]);
@@ -722,13 +747,47 @@ document.addEventListener('keyup', function(e) {
 
 
 
+
+
+
+
+
+$(document).on("mouseup touchend", "#up, #left , #right, #down", function() {
+    player.handleInput("stand");
+});
+
+$(document).on("mousedown touchstart", "#up", function() {
+    player.handleInput("up");
+});
+
+$(document).on("mousedown touchstart", "#left", function() {
+    player.handleInput("left");
+});
+
+
+$(document).on("mousedown touchstart", "#right", function() {
+    player.handleInput("right");
+});
+
+
+$(document).on("mousedown touchstart", "#down", function() {
+    player.handleInput("down");
+});
+
+
+
+$("#space").click(function() {
+     newGame.handleInput("spacebar");
+});
+
+
 var enemy1Block56 = new Enemy(level1markers.block5.x1,level1markers.block6.x2,level1markers.block5.y1+10,level1markers.block5.y2,130);
 var enemy1Block1315 = new Enemy(level1markers.block13.x1,level1markers.block15.x2-10,level1markers.block13.y1+30,level1markers.block13.y2-10,220);
 var enemy1Block1110 = new Enemy(level1markers.block11.x1,level1markers.block10.x2,level1markers.block10.y1,level1markers.block10.y2,200);
 
 var enemy2Block52 = new Enemy(level2markers.block5.x1,level2markers.block2.x2-10,level2markers.block5.y1+20,level2markers.block5.y2,180);
 var enemy2Block8 = new Enemy(level2markers.block8.x1,level2markers.block9.x2,level2markers.block8.y1-20,level2markers.block8.y2,220);
-var enemy2Block1215 = new Enemy(level2markers.block12.x1,level2markers.block15.x2,level2markers.block13.y1+20,level2markers.block13.y2,245);
+var enemy2Block1215 = new Enemy(level2markers.block12.x1,level2markers.block15.x2,level2markers.block13.y1+20,level2markers.block13.y2,205);
 
 
 var allEnemies2 = [enemy2Block52,enemy2Block8,enemy2Block1215];

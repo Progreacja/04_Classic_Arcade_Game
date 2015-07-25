@@ -3,34 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <title>Find The Key - Arcade Game</title>
-     <link href="css/normalize.css" rel="stylesheet" type="text/css">
-     <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-     <script src="js/resources.js"></script>
-     <link href='http://fonts.googleapis.com/css?family=Istok+Web:400,400italic|Sigmar+One' rel='stylesheet' type='text/css'>
-     <link rel="stylesheet" href="css/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="css/normalize.css" rel="stylesheet" type="text/css">
+    <link href='http://fonts.googleapis.com/css?family=Istok+Web:400,400italic|Sigmar+One' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 </head>
 <body>
     <div class="main">
     <header>
     <h1>Find The Key - Arcade Game</h1>
     <h2>Game for Udacity Front-End Nanodegree</h2>
+    <h2>(At least tablet is needed for proper display...)</h2>
     </header>
 
 
     <div class="menu">
-            <p><a href="" onclick="return false;" id="play">Play</a></p>
-            <div id="canvas"></div>
-            <p><a href="" onclick="return false;" id="instruc">Instructions</a></p>
+
+
+            <div class="menuitem"><a href="" onclick="return false;" id="play">Play</a></div>
+            <div class="menuitem"><a href="" onclick="return false;"  id="show" >show control buttons</a></div>
+            <div id="canvas" class="inline1"></div>
+            <div class="inline2" oncontextmenu="return false">
+                <div><a href="" onclick="return false;" class="btn" id="up">UP</a></div>
+            <div>
+                <a href="" onclick="return false;" class="btn" id="left">LEFT</a>
+                <a href="" onclick="return false;" class="btn" id="space">SPACE</a>
+                <a href="" onclick="return false;" class="btn" id="right">RIGHT</a>
+            </div>
+            <div><a href="" onclick="return false;" class="btn" id="down">DOWN</a></div>
+            </div>
+
+            <div class="menuitem"><a href="" onclick="return false;"  id="instruc" >Instructions</a></div>
             <div id="instrucList">
                 <ul>
-                    <li>Follow the star marker<img src="images/Selector.png" alt="star marker" class="pic"></li>
-                    <li><img src="images/Navigation keys.png" alt="star marker" class="pic">Use arrow keys to navigate</li>
-                    <li>Press <kbd>SPACE</kbd> to pause the game</li>
+                    <li><img src="images/Key2.png" alt="star marker" class="pic">Find a key to your home and bring it back!</li>
+                    <li>Follow the star marker.<img src="images/Selector2.png" alt="star marker" class="pic"></li>
+                    <li><img src="images/enemy-bug2.png" alt="star marker" class="pic">Avoid the bugs!</li>
+                    <li>Use arrow keys to navigate...<img src="images/Navigation keys.png" alt="star marker" class="pic"></li>
+                    <li>... or press "show control buttons" after you press PLAY.</li>
+                    <li>Press <kbd>SPACE</kbd> to pause the game.</li>
                 </ul>
             </div>
     </div>
 
-
+    <script src="js/resources.js"></script>
     <script src="js/app.js"></script>
     <script src="js/engine.js"></script>
 
@@ -43,7 +60,4 @@
     </footer>
     </div>
 </body>
-
-
-
 </html>

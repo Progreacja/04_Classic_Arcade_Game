@@ -2,6 +2,8 @@
 
 
 
+/* global newGame, player, allEnemies, iteams, lifeCounter */
+
 var level1 = function () {
     for (col = 0; col < 6; col++) {
         ctx.drawImage(Resources.get('images/water-block.png'), col * 101, -50);
@@ -173,9 +175,28 @@ var Engine = (function() {
         var now = Date.now(),
             dt = (now - lastTime) / 1000.0;
 
-        if(newGame.gameRun === true && !newGame.paused && !newGame.gameOver){
+        if(newGame.gameRun === true && !newGame.paused && !newGame.gameOver &&
+                !newGame.endGame){
         update(dt,now);
-        render(now);}
+        render(now);
+        }
+
+        if(newGame.gameRun === true && newGame.displayMessage === true){
+            textDrawer ("Oh No! I lost the key to the house!",canvas.width/2,canvas.height/2);
+            textDrawer ("Help me find it in the garden!",canvas.width/2,(canvas.height/2)+40);
+
+        }
+
+        if(newGame.endGame === true){
+            renderEndGame();
+        }
+
+        if(newGame.finishedGame === true) {
+            ctx.globalAlpha = 1;
+            textDrawer ("YOU MADE IT!",canvas.width/2,canvas.height/2);
+            textDrawer ("Press SPACE to start again!",canvas.width/2,(canvas.height/2)+40);
+        }
+
 
         lastTime = now;
         window.requestAnimationFrame(main);
@@ -261,7 +282,7 @@ var Engine = (function() {
     };
 
     function textDrawer (text, x , y) {
-        ctx.font = "34px Sigmar One";
+        ctx.font = "28px Sigmar One";
         ctx.textAlign = 'center';
         ctx.strokeStyle = "black";
         ctx.lineWidth = 3;
@@ -274,7 +295,7 @@ var Engine = (function() {
 
     function reset() {
 
-        if (!newGame.gameRun || newGame.paused === true){
+        if (!newGame.gameRun && !newGame.finishedGame || newGame.paused === true){
         textDrawer ("Press SPACE to start",canvas.width/2,canvas.height/2);
     }
         if (newGame.gameOver === true){
@@ -288,19 +309,76 @@ var Engine = (function() {
                 imgData.data[i+1] = grey;
                 imgData.data[i+2] = grey;
         }
-
-        ctx.putImageData(imgData,0,0);
-        textDrawer ("GAME OVER!",canvas.width/2,canvas.height/2);
-        textDrawer ("Press Enter to start again!",canvas.width/2,(canvas.height/2)+40);
-    }
-
-        if (newGame.gameRun === true){
-        window.cancelAnimationFrame(reset);
+            ctx.putImageData(imgData,0,0);
+            textDrawer ("GAME OVER!",canvas.width/2,canvas.height/2);
+            textDrawer ("Press SPACE to start again!",canvas.width/2,(canvas.height/2)+40);
     }
 
 
     window.requestAnimationFrame(reset);
     }
+
+    initParticles();
+
+    var particles = [];
+    var gravity = 0.04;
+
+    function initParticles() {
+      for (var i = 0; i < 100; i++) {
+        setTimeout(createParticle, 20*i, i);
+      }
+    }
+
+    function createParticle() {
+      // initial position in middle of canvas
+      var x = canvas.width/2;
+      var y = canvas.height/2 - 150;
+      // randomize the vx and vy a little - but we still want them flying 'up' and 'out'
+      var vx = -2+Math.random()*4;
+      var vy = Math.random()*-3;
+      // randomize size and opacity a little & pick a color from our color palette
+
+      var opacity =  0.5 + Math.random()*0.5;
+      var p = new Particle(x, y, vx, vy, opacity);
+      particles.push(p);
+    }
+
+    function Particle(x, y, vx, vy, opacity) {
+
+      function reset() {
+        x = canvas.width*0.5;
+        y = canvas.height*0.5 - 150;
+        opacity = 0.5 + Math.random()*0.5;
+        vx = -2+Math.random()*4;
+        vy = Math.random()*-3;
+      }
+
+      this.update = function() {
+        // if a particle has faded to nothing we can reset it to the starting position
+        if (opacity - 0.005 > 0) opacity -= 0.005 ;
+        else reset();
+
+        // add gravity to vy
+        vy += gravity;
+        x += vx;
+        y += vy;
+      };
+
+      this.draw = function() {
+        ctx.globalAlpha = opacity;
+        ctx.drawImage(Resources.get('images/Heart.png'), x, y);
+      };
+    }
+
+    function renderEndGame() {
+      ctx.clearRect(0, 0,  canvas.width, canvas.height);
+      for (var i = 0; i < particles.length; i++) {
+        particles[i].update();
+        particles[i].draw();
+      }
+
+    }
+
 
 
     Resources.load([
@@ -348,8 +426,31 @@ var Engine = (function() {
 $("#play").click(function() {
     Engine();
     $("#play").hide();
+    $("#show").show();
     $(".menu").css("margin-top",0);
 });
+
+
+
+$("#show").click(function() {
+    $(".inline2").toggle("slow", function(){
+        cssChanger();
+    });
+    cssChanger();
+
+});
+
+var cssChanger = function(){
+        if ($(".inline2").css("display") !== "none") {
+        $(".inline1").css("float", "left");
+        $(".inline1").css("width", "60%");
+    } else if ($(".inline2").css("display") === "none") {
+        $(".inline1").css("float", "none");
+        $(".inline1").css("width", "100%");
+    }};
+
+
+
 
 $("#instruc").click(function() {
     $("#instrucList").slideToggle("slow");

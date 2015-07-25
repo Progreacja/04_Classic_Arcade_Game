@@ -2,7 +2,7 @@ html,body {
     text-align: center;
     margin: 0;
     padding: 0;
-    height: 100%;
+    height: 98%;
 }
 
 .main {
@@ -10,13 +10,15 @@ html,body {
     margin: 0 auto; /* center, not in IE5 */
     height: auto !important; /* real browsers */
     height: 100%; /* IE6: treaded as min-height*/
-    max-width: 950px;
+    max-width: 960px;
     min-height: 100%; /* real browsers */
+
 }
 
-p {
+a {
     padding: 0;
     margin: 0;
+    text-align: center;
 }
 ul {
    font-family: 'Istok Web', sans-serif;
@@ -42,13 +44,19 @@ h2 {
    color: #c0c0c0;
 }
 
-a,
-a:visited {
+.menuitem a,
+.menuitem a:visited {
     text-decoration: none;
     color: chocolate;
+    clear: both;
+
 }
-a:hover {
+.menuitem a:hover {
     color: cornflowerblue;
+}
+.menuitem {
+    width: 100%;
+    clear: both;
 }
 
 .menu {
@@ -56,18 +64,26 @@ a:hover {
     font-size: 2em;
     padding-bottom: 10%;
     font-family: 'Sigmar One', cursive;
-}
+
+ }
 
 footer {
     font-size: 0.78em;
     text-align: center;
     clear: both;
     color: #ccc;
-    position:absolute;
-    width:100%;
-    bottom:0;
+    position: absolute;
+    width: 100%;
+    bottom: 0;
 }
 
+a {
+    transition: 0.2s ease-in-out;
+}
+
+#show {
+    display: none;
+}
 
 .pic {
     width: 50px;
@@ -93,3 +109,37 @@ footer {
 canvas {
     max-width: 550px;
  }
+
+ .btn {
+  display:inline-block;
+  border-radius: 20%;
+  font-family: 'Istok Web', sans-serif;
+  color: #ffffff;
+  font-size: 18px;
+  background: cornflowerblue;
+  padding: 10px 20px;
+  text-decoration: none;
+  width: 60px;
+}
+
+
+.btn:hover {
+  text-decoration: none;
+}
+
+.inline1 {
+    width: 100%;
+    float: none;
+    transition: 0.5s ease-in-out;
+
+}
+.inline2 {
+    width: 40%;
+    float: right;
+    display: none;
+    margin-top: 20%;
+}
+.btn {
+  -webkit-user-select: none; /* disable selection/Copy of UIWebView */
+  -webkit-touch-callout: none; /* disable the IOS popup when long-press on a link */
+}
