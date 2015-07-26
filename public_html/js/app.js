@@ -1,201 +1,215 @@
 /* global ctx */
-
-
 //The game has two levels, level1markers and level2markers, are dividing each
 //level in blocks. Base on which block player currently is, block are being assigned.
 //Blocks (level1Blocks & level2Blocks) limit area where can go, add obsticales etc.
-
 var level1markers = {
-    block1 : {
-    x1 : -10,
-    x2 : 380,
-    y1 : 506,
-    y2 : 517
+    block1: {
+        x1: -10,
+        x2: 380,
+        y1: 506,
+        y2: 517
     },
-    block2 : {
-    x1 : 380,
-    x2 : 413,
-    y1 : 506,
-    y2 : 517
+    block2: {
+        x1: 380,
+        x2: 413,
+        y1: 506,
+        y2: 517
     },
-    block3 : {
-    x1 : 413,
-    x2 : 515,
-    y1 : 506,
-    y2 : 517
+    block3: {
+        x1: 413,
+        x2: 515,
+        y1: 506,
+        y2: 517
     },
-    block4 : {
-    x1 : 365,
-    x2 : 425,
-    y1 : 368,
-    y2 : 506
+    block4: {
+        x1: 365,
+        x2: 425,
+        y1: 368,
+        y2: 506
     },
-    block5 : {
-    x1 : 365,
-    x2 : 413,
-    y1 : 275,
-    y2 : 368
+    block5: {
+        x1: 365,
+        x2: 413,
+        y1: 275,
+        y2: 368
     },
-    block6 : {
-    x1 : 413,
-    x2 : 515,
-    y1 : 260,
-    y2 : 368
+    block6: {
+        x1: 413,
+        x2: 515,
+        y1: 260,
+        y2: 368
     },
-    block7 : {
-    x1 : 435,
-    x2 : 515,
-    y1 : 189,
-    y2 : 260
+    block7: {
+        x1: 435,
+        x2: 515,
+        y1: 189,
+        y2: 260
     },
-    block8 : {
-    x1 : 365,
-    x2 : 435,
-    y1 : 189,
-    y2 : 275
+    block8: {
+        x1: 365,
+        x2: 435,
+        y1: 189,
+        y2: 275
     },
-    block9 : {
-    x1 : 290,
-    x2 : 365,
-    y1 : 189,
-    y2 : 275
+    block9: {
+        x1: 290,
+        x2: 365,
+        y1: 189,
+        y2: 275
     },
-    block10 : {
-    x1 : 229,
-    x2 : 435,
-    y1 : 145,
-    y2 : 189
+    block10: {
+        x1: 229,
+        x2: 435,
+        y1: 145,
+        y2: 189
     },
-    block11 : {
-    x1 : -10,
-    x2 : 229,
-    y1 : 145,
-    y2 : 189
+    block11: {
+        x1: -10,
+        x2: 229,
+        y1: 145,
+        y2: 189
     },
-    block12 : {
-    x1 : -10,
-    x2 : 229,
-    y1 : 35,
-    y2 : 145
+    block12: {
+        x1: -10,
+        x2: 229,
+        y1: 35,
+        y2: 145
     },
-    block13 : {
-    x1 : -10,
-    x2 : 229,
-    y1 : -15,
-    y2 : 35
+    block13: {
+        x1: -10,
+        x2: 229,
+        y1: -15,
+        y2: 35
     },
-    block14 : {
-    x1 : 229,
-    x2 : 476,
-    y1 : -15,
-    y2 : 35
+    block14: {
+        x1: 229,
+        x2: 476,
+        y1: -15,
+        y2: 35
     },
-    block15 : {
-    x1 : 476,
-    x2 : 515,
-    y1 : -15,
-    y2 : 35
+    block15: {
+        x1: 476,
+        x2: 515,
+        y1: -15,
+        y2: 35
     },
-    block16 : {
-    x1 : 476,
-    x2 : 515,
-    y1 : -60,
-    y2 : -15
+    block16: {
+        x1: 476,
+        x2: 515,
+        y1: -60,
+        y2: -15
     }
 };
 
 var level2markers = {
-    block1 : {
-    x1 : 478,
-    x2 : 510,
-    y1 : 420,
-    y2 : 510
+    block1: {
+        x1: 478,
+        x2: 510,
+        y1: 420,
+        y2: 510
     },
-    block2 : {
-    x1 : 478,
-    x2 : 515,
-    y1 : 373,
-    y2 : 420},
-    block3 : {
-    x1 : 228,
-    x2 : 478,
-    y1 : 373,
-    y2 : 420},
-    block4 : {
-    x1 : 173,
-    x2 : 228,
-    y1 : 373,
-    y2 : 420},
-    block5 : {
-    x1 : -10,
-    x2 : 173,
-    y1 : 373,
-    y2 : 420},
-    block6 : {
-    x1 : 173,
-    x2 : 230,
-    y1 : 303,
-    y2 : 373},
-    block7 : {
-    x1 : -10,
-    x2 : 132,
-    y1 : 303,
-    y2 : 344},
-    block8 : {
-    x1 : -10,
-    x2 : 173,
-    y1 : 206,
-    y2 : 303},
-    block9 : {
-    x1 : 173,
-    x2 : 230,
-    y1 : 206,
-    y2 : 303},
-    block10 : {
-    x1 : 173,
-    x2 : 230,
-    y1 : 111,
-    y2 : 206},
-    block11 : {
-    x1 : 173,
-    x2 : 230,
-    y1 : 20,
-    y2 : 111},
-    block12 : {
-    x1 : -10,
-    x2 : 173,
-    y1 : -35,
-    y2 : 111},
-    block13 : {
-    x1 : 34,
-    x2 : 228,
-    y1 : -35,
-    y2 : 20},
-    block14 : {
-    x1 : 228,
-    x2 : 455,
-    y1 : -35,
-    y2 : 20},
-    block15 : {
-    x1 : 455,
-    x2 : 515,
-    y1 : -35,
-    y2 : 20},
-    block16 : {
-    x1 : 455,
-    x2 : 515,
-    y1 : 20,
-    y2 : 206},
-    block17 : {
-    x1 : 465,
-    x2 : 515,
-    y1 : 206,
-    y2 : 265},
-    block18 : {
-    x1 : 371,
-    x2 : 465,
-    y1 : 206,
-    y2 : 265}
+    block2: {
+        x1: 478,
+        x2: 515,
+        y1: 373,
+        y2: 420
+    },
+    block3: {
+        x1: 228,
+        x2: 478,
+        y1: 373,
+        y2: 420
+    },
+    block4: {
+        x1: 173,
+        x2: 228,
+        y1: 373,
+        y2: 420
+    },
+    block5: {
+        x1: -10,
+        x2: 173,
+        y1: 373,
+        y2: 420
+    },
+    block6: {
+        x1: 173,
+        x2: 230,
+        y1: 303,
+        y2: 373
+    },
+    block7: {
+        x1: -10,
+        x2: 132,
+        y1: 303,
+        y2: 344
+    },
+    block8: {
+        x1: -10,
+        x2: 173,
+        y1: 206,
+        y2: 303
+    },
+    block9: {
+        x1: 173,
+        x2: 230,
+        y1: 206,
+        y2: 303
+    },
+    block10: {
+        x1: 173,
+        x2: 230,
+        y1: 111,
+        y2: 206
+    },
+    block11: {
+        x1: 173,
+        x2: 230,
+        y1: 20,
+        y2: 111
+    },
+    block12: {
+        x1: -10,
+        x2: 173,
+        y1: -35,
+        y2: 111
+    },
+    block13: {
+        x1: 34,
+        x2: 228,
+        y1: -35,
+        y2: 20
+    },
+    block14: {
+        x1: 228,
+        x2: 455,
+        y1: -35,
+        y2: 20
+    },
+    block15: {
+        x1: 455,
+        x2: 515,
+        y1: -35,
+        y2: 20
+    },
+    block16: {
+        x1: 455,
+        x2: 515,
+        y1: 20,
+        y2: 206
+    },
+    block17: {
+        x1: 465,
+        x2: 515,
+        y1: 206,
+        y2: 265
+    },
+    block18: {
+        x1: 371,
+        x2: 465,
+        y1: 206,
+        y2: 265
+    }
 };
 
 
@@ -349,8 +363,8 @@ var Player = function() {
     this.sprite = 'images/char-pink-girl.png';
     this.state = "stand";
     this.location = "block1";
-    this.width =20;
-    this.height =40;
+    this.width = 20;
+    this.height = 40;
     this.lifeCount = 0;
     this.keyStatus = 0;
     this.immortal = 0;
@@ -373,27 +387,28 @@ Player.prototype.update = function(dt) {
 //level is being stored Player object and is being changed on touching a selector
 
 Player.prototype.levelCheck = function() {
-    if(this.level === "level1") {
+    if (this.level === "level1") {
         this.levelMarkers = level1markers;
         this.levelBlocks = level1Blocks;
         allEnemies = allEnemies1;
         iteams = iteams1;
-    }else if (this.level === "level2") {
+    } else if (this.level === "level2") {
         this.levelMarkers = level2markers;
         this.levelBlocks = level2Blocks;
         allEnemies = allEnemies2;
-        iteams = iteams2;}
+        iteams = iteams2;
+    }
 };
 
 //checkLocation base on canvas position, assignes cuurent block, so player stays on the map
 
 Player.prototype.checkLocation = function() {
-    for(var each in this.levelMarkers) {
-        if(this.x > this.levelMarkers[each].x1 && this.x < this.levelMarkers[each].x2 &&
-            this.y > this.levelMarkers[each].y1 && this.y<this.levelMarkers[each].y2) {
-                this.location = each;
-                break;
-                }
+    for (var each in this.levelMarkers) {
+        if (this.x > this.levelMarkers[each].x1 && this.x < this.levelMarkers[each].x2 &&
+            this.y > this.levelMarkers[each].y1 && this.y < this.levelMarkers[each].y2) {
+            this.location = each;
+            break;
+        }
     }
 };
 
@@ -401,20 +416,20 @@ Player.prototype.checkLocation = function() {
 //which will be executed in Player.prototype.move for smooth animation.
 
 Player.prototype.handleInput = function(key) {
-    switch(key){
+    switch (key) {
         case "left":
-           this.state = "move_left";
-           break;
+            this.state = "move_left";
+            break;
 
-       case "right":
-           this.state = "move_right";
-           break;
+        case "right":
+            this.state = "move_right";
+            break;
 
-       case "down":
+        case "down":
             this.state = "move_down";
             break;
 
-       case "up":
+        case "up":
             this.state = "move_up";
             break;
 
@@ -428,22 +443,22 @@ Player.prototype.handleInput = function(key) {
 //unless position will not within currently assigned blocks.
 
 Player.prototype.move = function(dt) {
-   if(this.state === "move_left"
-        && (this.x-3) > this.levelBlocks.blocks[this.location].left){
-       this.x = this.x - (dt * 180);
-   }
-  if(this.state === "move_right"
-        && (this.x+3) <  this.levelBlocks.blocks[this.location].right){
-       this.x = this.x + (dt * 180);
-   }
-  if(this.state === "move_down"
-        && (this.y+3) < this.levelBlocks.blocks[this.location].down){
+    if (this.state === "move_left" &&
+        (this.x - 3) > this.levelBlocks.blocks[this.location].left) {
+        this.x = this.x - (dt * 180);
+    }
+    if (this.state === "move_right" &&
+        (this.x + 3) < this.levelBlocks.blocks[this.location].right) {
+        this.x = this.x + (dt * 180);
+    }
+    if (this.state === "move_down" &&
+        (this.y + 3) < this.levelBlocks.blocks[this.location].down) {
         this.y = this.y + (dt * 180);
-   }
-  if(this.state === "move_up"
-        && (this.y-3) > this.levelBlocks.blocks[this.location].up){
-       this.y = this.y - (dt * 180);
-   }
+    }
+    if (this.state === "move_up" &&
+        (this.y - 3) > this.levelBlocks.blocks[this.location].up) {
+        this.y = this.y - (dt * 180);
+    }
 };
 
 //picUpdate changes picture of the player base on the event
@@ -451,25 +466,25 @@ Player.prototype.move = function(dt) {
 //immortal after the touch and then character is pink.
 
 Player.prototype.picUpdate = function(dt) {
-    if (this.immortal > (Date.now()/1000)){
+    if (this.immortal > (Date.now() / 1000)) {
         this.sprite = 'images/char-pink-girl-immortal.png';
-    } else{
+    } else {
         if (keyBlock18.status === "picked") {
             this.sprite = 'images/char-pink-girl-holding.png';
-        }else if (keyBlock18.status === "onground") {
+        } else if (keyBlock18.status === "onground") {
             this.sprite = 'images/char-pink-girl.png';
-    }
+        }
     }
 };
 
 //Player reset fuction, to put life count on zero and move player to start location.
 
 Player.prototype.reset = function() {
-        this.lifeCount = 0;
-        this.keyStatus = 0;
-        this.x = 0;
-        this.y = 515;
-        this.level = "level1";
+    this.lifeCount = 0;
+    this.keyStatus = 0;
+    this.x = 0;
+    this.y = 515;
+    this.level = "level1";
 };
 
 //Colision check is inside Engine(), this function is being called if collision
@@ -477,19 +492,18 @@ Player.prototype.reset = function() {
 //which freezes the game.
 
 Player.prototype.colision = function() {
-    if (this.lifeCount === 0){
+    if (this.lifeCount === 0) {
         newGame.gameOver = true;
-    }
-    else if(this.lifeCount > 0) {
-        this.immortal = (Date.now()/1000) +2;
-        this.lifeCount = this.lifeCount-1;
+    } else if (this.lifeCount > 0) {
+        this.immortal = (Date.now() / 1000) + 2;
+        this.lifeCount = this.lifeCount - 1;
         keyBlock18.status = "onground";
         this.keyStatus = 0;
     }
 };
 
 Player.prototype.render = function() {
-   ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
 //Enemy objects takes 4 position parameters and rate(speed)
@@ -497,9 +511,9 @@ Player.prototype.render = function() {
 //calculate y axis position.
 
 var Enemy = function(x1, x2, y1, y2, rate) {
-    this.x = x1 +20;
-    this.y = (y1+y2)/2;
-    this.rate =  rate;
+    this.x = x1 + 20;
+    this.y = (y1 + y2) / 2;
+    this.rate = rate;
     this.direction = "right";
     this.x1 = x1;
     this.x2 = x2;
@@ -518,9 +532,9 @@ Enemy.prototype.update = function(dt) {
 // x1 or x2 and then changes its direction.
 
 Enemy.prototype.location = function() {
-    if(this.x > this.x2) {
+    if (this.x > this.x2) {
         this.direction = "left";
-    }else if ((this.x-8) < this.x1) {
+    } else if ((this.x - 8) < this.x1) {
         this.direction = "right";
     }
 };
@@ -528,9 +542,9 @@ Enemy.prototype.location = function() {
 //Base on direction status, enemy moves this way.
 
 Enemy.prototype.move = function(dt) {
-    if(this.direction === "left"){
+    if (this.direction === "left") {
         this.x = this.x - (dt * this.rate);
-    }else if (this.direction === "right"){
+    } else if (this.direction === "right") {
         this.x = this.x + (dt * this.rate);
     }
 };
@@ -540,29 +554,28 @@ Enemy.prototype.move = function(dt) {
 Enemy.prototype.picture = function() {
     if (this.direction === "right") {
         this.sprite = 'images/enemy-bug.png';
-    }
-    else if (this.direction === "left") {
+    } else if (this.direction === "left") {
         this.sprite = 'images/enemy-bug-left.png';
     }
 };
 
 Enemy.prototype.render = function(now) {
-ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
 //gameReset being called whenever game should be start from the beginning.
 
 Game.prototype.gameReset = function() {
-        player.reset();
-        hearts.forEach(function(heart){
-            heart.status = "onground";
-            heart.renderStatus = "yes";
-        });
-        selectors.forEach(function(selector){
-            selector.status = "onground";
-            selector.renderStatus = "yes";
-        });
-        keyBlock18.status = "onground";
+    player.reset();
+    hearts.forEach(function(heart) {
+        heart.status = "onground";
+        heart.renderStatus = "yes";
+    });
+    selectors.forEach(function(selector) {
+        selector.status = "onground";
+        selector.renderStatus = "yes";
+    });
+    keyBlock18.status = "onground";
 };
 
 //handleInput for reacting space click button - restarting game, pausing
@@ -575,7 +588,7 @@ Game.prototype.handleInput = function(key) {
         this.displayMessage = true;
         startMessageTime();
         this.gameReset();
-    }else if (key === "spacebar" && this.paused === true)  {
+    } else if (key === "spacebar" && this.paused === true) {
         this.paused = false;
     } else if (key === "spacebar" && this.paused === false && !this.gameOver) {
         this.paused = true;
@@ -588,7 +601,7 @@ Game.prototype.handleInput = function(key) {
 //Timeout fuction called only on beginning of game (or after complition)
 //to display "call for help" in finding the key
 
-var startMessageTime = function(){
+var startMessageTime = function() {
     setTimeout(messageStart, 5000);
 };
 
@@ -600,13 +613,13 @@ var messageStart = function() {
 //Heart object can be collected and adds to the lifecount so player can be survive
 //touching the enemy
 
-var Heart = function(x,y) {
+var Heart = function(x, y) {
     this.x = x;
     this.y = y;
-    this.sprite =  'images/Heart.png';
-    this.width =40;
-    this.height =40;
-    this.status ="onground";
+    this.sprite = 'images/Heart.png';
+    this.width = 40;
+    this.height = 40;
+    this.status = "onground";
     this.renderStatus = "yes";
 };
 
@@ -625,18 +638,18 @@ Heart.prototype.checkStatus = function() {
 };
 
 Heart.prototype.render = function() {
- if(this.renderStatus === "yes") {
-    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-}
+    if (this.renderStatus === "yes") {
+        ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+    }
 };
 
 //LifeCounter appears on top of screen and shows how many lives player
 //has for use.
 
-var LifeCounter = function(x,y) {
+var LifeCounter = function(x, y) {
     this.x = x;
     this.y = y;
-    this.sprite =  'images/Heart.png';
+    this.sprite = 'images/Heart.png';
     this.count = 0 + " x ";
 };
 
@@ -648,21 +661,21 @@ LifeCounter.prototype.render = function() {
     ctx.font = "40px Arial Black";
     ctx.fillStyle = "white";
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-    ctx.fillText(this.count,this.x -20,this.y+125);
-    ctx.strokeText(this.count,this.x -20,this.y+125);
+    ctx.fillText(this.count, this.x - 20, this.y + 125);
+    ctx.strokeText(this.count, this.x - 20, this.y + 125);
 };
 
 
 //Key is the object which player is looking for, it can be picked and carried.
 //However it will be dropped on collision with enemy even if player has lives left
 
-var Key = function(x,y) {
+var Key = function(x, y) {
     this.x = x;
     this.y = y;
-    this.sprite =  'images/Key.png';
-    this.width =20;
-    this.height =50;
-    this.status ="onground";
+    this.sprite = 'images/Key.png';
+    this.width = 20;
+    this.height = 50;
+    this.status = "onground";
     this.renderStatus = "yes";
 };
 
@@ -674,36 +687,37 @@ Key.prototype.checkStatus = function() {
     if (this.status === "picked") {
         player.keyStatus = 1;
         this.renderStatus = "no";
-    }else if (this.status === "onground") {
+    } else if (this.status === "onground") {
         player.keyStatus = 0;
         this.renderStatus = "yes";
     }
 };
 
 Key.prototype.render = function() {
-    if(this.renderStatus === "yes") {
-    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);}
+    if (this.renderStatus === "yes") {
+        ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+    }
 };
 
 //Selectors are "stars" showing the way for the player, each selector has unique
 //events therefore their checkStatus functions are not defined in prototype.
 
-var Selector = function(x,y) {
+var Selector = function(x, y) {
     this.x = x;
     this.y = y;
-    this.sprite =  'images/Selector.png';
-    this.width =80;
-    this.height =50;
-    this.status ="onground";
+    this.sprite = 'images/Selector.png';
+    this.width = 80;
+    this.height = 50;
+    this.status = "onground";
     this.renderStatus = "yes";
 };
 
-Selector.prototype.checkStatus = function() {
-};
+Selector.prototype.checkStatus = function() {};
 
 Selector.prototype.render = function() {
-    if(this.renderStatus === "yes") {
-    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);}
+    if (this.renderStatus === "yes") {
+        ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+    }
 };
 
 Selector.prototype.update = function() {
@@ -712,9 +726,9 @@ Selector.prototype.update = function() {
 
 //Object selectors being created now, so unique checkstatuses can be assinged.
 
-var level1Selector = new Selector(505,-75);
-var level1Selector2 = new Selector(405,495);
-var level2Selector = new Selector(505,480);
+var level1Selector = new Selector(505, -75);
+var level1Selector2 = new Selector(405, 495);
+var level2Selector = new Selector(505, 480);
 
 
 //level1Selector shows at the beigging and once touched changes level1 to level2
@@ -727,7 +741,7 @@ level1Selector.checkStatus = function() {
         player.x = 503;
         player.y = 470;
         this.renderStatus = "no";
-    }  else if(player.keyStatus === 0 && player.level === "level1") {
+    } else if (player.keyStatus === 0 && player.level === "level1") {
         this.renderStatus = "yes";
         this.status = "onground";
     }
@@ -741,22 +755,24 @@ level1Selector.checkStatus = function() {
 level1Selector2.checkStatus = function() {
     if (player.keyStatus === 1) {
         this.renderStatus = "yes";
-        if(this.status === "picked"){
+        if (this.status === "picked") {
             newGame.endGame = true;
             endMessageTime();
         }
-    } else if(player.keyStatus === 0) {
+    } else if (player.keyStatus === 0) {
         this.renderStatus = "no";
         this.status = "onground";
     }
 };
 
-var endMessageTime = function(){
+var endMessageTime = function() {
     setTimeout(endMessage, 5000);
 };
 
 var endMessage = function() {
-    setTimeout(function(){newGame.endGame = false;}, 15000);
+    setTimeout(function() {
+        newGame.endGame = false;
+    }, 15000);
     newGame.finishedGame = true;
     newGame.gameRun = false;
 };
@@ -767,7 +783,7 @@ var endMessage = function() {
 level2Selector.checkStatus = function() {
     if (player.keyStatus === 0) {
         this.renderStatus = "no";
-        this.status ="onground";
+        this.status = "onground";
     } else if (player.keyStatus === 1 && player.level === "level2") {
         this.renderStatus = "yes";
 
@@ -776,7 +792,8 @@ level2Selector.checkStatus = function() {
             player.x = 500;
             player.y = -60;
             this.renderStatus = "no";
-    }}
+        }
+    }
 };
 
 //keydown addEventListener for moving a player on the map
@@ -784,7 +801,7 @@ level2Selector.checkStatus = function() {
 
 document.addEventListener('keydown', function(e) {
 
-  var  allowedKeys = {
+    var allowedKeys = {
         32: 'spacebar',
         37: 'left',
         38: 'up',
@@ -792,28 +809,29 @@ document.addEventListener('keydown', function(e) {
         40: 'down'
     };
 
-    if(e.keyCode === 32){
-    newGame.handleInput(allowedKeys[e.keyCode]);
-    }else {
-    player.handleInput(allowedKeys[e.keyCode]);
+    if (e.keyCode === 32) {
+        newGame.handleInput(allowedKeys[e.keyCode]);
+    } else {
+        player.handleInput(allowedKeys[e.keyCode]);
     }
-   if (e.keyCode in allowedKeys){
-    e.preventDefault();
-  }
+    if (e.keyCode in allowedKeys) {
+        e.preventDefault();
+    }
 });
 
 //keyup event so player stops once key is no longer pressed.
 
 document.addEventListener('keyup', function(e) {
-   if(newGame.gameRun === true ){
-    var allowedKeys = {
-        37: 'stand',
-        38: 'stand',
-        39: 'stand',
-        40: 'stand'
-    };
-    player.handleInput(allowedKeys[e.keyCode]);
-    }});
+    if (newGame.gameRun === true) {
+        var allowedKeys = {
+            37: 'stand',
+            38: 'stand',
+            39: 'stand',
+            40: 'stand'
+        };
+        player.handleInput(allowedKeys[e.keyCode]);
+    }
+});
 
 
 //Jquery controls for on screen control buttons, adjusted also for touch devices.
@@ -845,58 +863,55 @@ $(document).on("mousedown touchstart", "#down", function() {
 });
 
 $("#space").click(function() {
-     newGame.handleInput("spacebar");
+    newGame.handleInput("spacebar");
 });
 
 //Creating enemies for level1 - using blocks data for defining x1,x2,y1,y2
 
-var enemy1Block56 = new Enemy(level1markers.block5.x1,level1markers.block6.x2,
-    level1markers.block5.y1+10,level1markers.block5.y2,160);
+var enemy1Block56 = new Enemy(level1markers.block5.x1, level1markers.block6.x2,
+    level1markers.block5.y1 + 10, level1markers.block5.y2, 160);
 
-var enemy1Block1315 = new Enemy(level1markers.block13.x1,level1markers.block15.x2-10,
-    level1markers.block13.y1+30,level1markers.block13.y2-10,220);
+var enemy1Block1315 = new Enemy(level1markers.block13.x1, level1markers.block15.x2 - 10,
+    level1markers.block13.y1 + 30, level1markers.block13.y2 - 10, 220);
 
-var enemy1Block1110 = new Enemy(level1markers.block11.x1,level1markers.block10.x2,
-    level1markers.block10.y1,level1markers.block10.y2,250);
+var enemy1Block1110 = new Enemy(level1markers.block11.x1, level1markers.block10.x2,
+    level1markers.block10.y1, level1markers.block10.y2, 220);
 
 //Creating enemies for level2
 
-var enemy2Block52 = new Enemy(level2markers.block5.x1,level2markers.block2.x2-10,
-    level2markers.block5.y1+20,level2markers.block5.y2,180);
+var enemy2Block52 = new Enemy(level2markers.block5.x1, level2markers.block2.x2 - 10,
+    level2markers.block5.y1 + 20, level2markers.block5.y2, 180);
 
-var enemy2Block8 = new Enemy(level2markers.block8.x1,level2markers.block9.x2,
-    level2markers.block8.y1-20,level2markers.block8.y2,220);
+var enemy2Block8 = new Enemy(level2markers.block8.x1, level2markers.block9.x2,
+    level2markers.block8.y1 - 20, level2markers.block8.y2, 220);
 
-var enemy2Block1215 = new Enemy(level2markers.block12.x1,level2markers.block15.x2,
-    level2markers.block13.y1+20,level2markers.block13.y2,240);
+var enemy2Block1215 = new Enemy(level2markers.block12.x1, level2markers.block15.x2,
+    level2markers.block13.y1 + 20, level2markers.block13.y2, 240);
 
 //Enemies being grouped in two list so they can changed, base on the level
 
-var allEnemies2 = [enemy2Block52,enemy2Block8,enemy2Block1215];
-var allEnemies1 = [enemy1Block1110,enemy1Block1315,enemy1Block56];
+var allEnemies2 = [enemy2Block52, enemy2Block8, enemy2Block1215];
+var allEnemies1 = [enemy1Block1110, enemy1Block1315, enemy1Block56];
 var allEnemies = [];
 
 //Other items
 
 var heart2Block7 = new Heart(5, 325);
 var heart1Block11 = new Heart(0, 100);
-var keyBlock18 = new Key(391,250);
+var keyBlock18 = new Key(391, 250);
 var player = new Player();
 
 //Items being grouped in list for game resart
 
-var hearts = [heart2Block7,heart1Block11];
-var selectors = [level1Selector,level1Selector2,level2Selector];
+var hearts = [heart2Block7, heart1Block11];
+var selectors = [level1Selector, level1Selector2, level2Selector];
 
 //Items being grouped for level changes
 
-var iteams2 = [heart2Block7,keyBlock18,level2Selector];
-var iteams1 = [heart1Block11,level1Selector,level1Selector2];
-var iteams =[];
+var iteams2 = [heart2Block7, keyBlock18, level2Selector];
+var iteams1 = [heart1Block11, level1Selector, level1Selector2];
+var iteams = [];
 
+var lifeCounter = new LifeCounter(100, -75);
 
-
-var lifeCounter = new LifeCounter(100,-75);
-
-var newGame = new Game;
-
+var newGame = new Game();
