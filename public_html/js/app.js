@@ -1,4 +1,9 @@
-/* global ctx, documnet */
+/* global ctx */
+
+
+//The game has two levels, level1markers and level2markers, are dividing each
+//level in blocks. Base on which block player currently is, block are being assigned.
+//Blocks (level1Blocks & level2Blocks) limit area where can go, add obsticales etc.
 
 var level1markers = {
     block1 : {
@@ -194,22 +199,25 @@ var level2markers = {
 };
 
 
+//Below is set of function to make assigning of blocks easier.
+//If "undefined" is passed, the prototype value will be added.
+//This solution was provided by jad-panda on my question on stackoverflow.com
+//http://stackoverflow.com/questions/31154686/objects-within-object-and-assigning-prototype
+
 function Block(left, right, up, down) {
-  this.left = left || -10;
-  this.right = right || 515;
-  this.up = up || -35;
-  this.down = down || 510;
+    this.left = left || -10;
+    this.right = right || 515;
+    this.up = up || -35;
+    this.down = down || 510;
 }
 
-
-
 function Levelblocks() {
-  this.blocks = {};
+    this.blocks = {};
 }
 
 Levelblocks.prototype.addBlock = function(left, right, up, down) {
-  var numOfBlocks = Object.keys(this.blocks).length + 1;
-  this.blocks['block' + numOfBlocks] = new Block(left, right, up, down);
+    var numOfBlocks = Object.keys(this.blocks).length + 1;
+    this.blocks['block' + numOfBlocks] = new Block(left, right, up, down);
 };
 
 var level1Blocks = new Levelblocks();
@@ -261,8 +269,6 @@ level1Blocks.addBlock(undefined, 515, undefined, 35);
 
 //block16
 level1Blocks.addBlock(476, 515, -60, undefined);
-
-
 
 
 
@@ -322,52 +328,7 @@ level2Blocks.addBlock(undefined, 515, undefined, 265);
 //block18
 level2Blocks.addBlock(371, undefined, 206, 265);
 
-
-var Enemy = function(x1, x2, y1, y2, rate) {
-    this.x = x1 +20;
-    this.y = (y1+y2)/2;
-    this.rate =  rate;
-    this.direction = "right";
-    this.x1 = x1;
-    this.x2 = x2;
-    this.sprite = 'images/enemy-bug.png';
-    this.width = 70;
-    this.height = 30;
-};
-
-Enemy.prototype.picture = function() {
-    if (this.direction === "right") {
-        this.sprite = 'images/enemy-bug.png';
-    }
-    else if (this.direction === "left") {
-        this.sprite = 'images/enemy-bug-left.png';
-    }
-};
-Enemy.prototype.location = function() {
-    if(this.x > this.x2) {
-        this.direction = "left";
-    }else if ((this.x-8) < this.x1) {
-        this.direction = "right";
-    }
-};
-
-Enemy.prototype.move = function(dt) {
-    if(this.direction === "left"){
-        this.x = this.x - (dt * this.rate);
-    }else if (this.direction === "right"){
-        this.x = this.x + (dt * this.rate);
-    }
-};
-
-Enemy.prototype.update = function(dt) {
-    this.location();
-    this.picture();
-    this.move(dt);
-};
-
-Enemy.prototype.render = function(now) {
-ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-};
+//Game object is reponsible of keeping track of game progress and status.
 
 var Game = function() {
     this.gameRun = false;
@@ -378,45 +339,9 @@ var Game = function() {
     this.displayMessage = true;
 };
 
-Game.prototype.gameReset = function() {
-        player.reset();
-        hearts.forEach(function(heart){
-            heart.status = "onground";
-            heart.renderStatus = "yes";
-        });
-        selectors.forEach(function(selector){
-            selector.status = "onground";
-            selector.renderStatus = "yes";
-        });
-        keyBlock18.status = "onground";
 
-};
 
-Game.prototype.handleInput = function(key) {
-    if (key === "spacebar" && this.gameRun === false) {
-        this.gameRun = true;
-        this.finishedGame = false;
-        this.displayMessage = true;
-        startMessageTime();
-        this.gameReset();
-    }else if (key === "spacebar" && this.paused === true)  {
-        this.paused = false;
-    } else if (key === "spacebar" && this.paused === false && !this.gameOver) {
-        this.paused = true;
-    } else if (key === "spacebar" && this.gameOver === true) {
-        this.gameOver = false;
-        this.gameReset();
-    }
-};
-
-var startMessageTime = function(){
-    setTimeout(messageStart, 4000);
-};
-
-var messageStart = function() {
-    newGame.displayMessage = false;
-};
-
+//Player object storing various game details.
 
 var Player = function() {
     this.x = 0;
@@ -434,12 +359,18 @@ var Player = function() {
     this.levelBlocks = level1Blocks;
 };
 
+//Update function called from Engine()
+
 Player.prototype.update = function(dt) {
     this.move(dt);
     this.checkLocation();
     this.picUpdate();
     this.levelCheck();
 };
+
+// levelCheck checks on which level player currently is, assigning correct
+//blocks, and level markers. Additionally assigns list of items and enemies for display.
+//level is being stored Player object and is being changed on touching a selector
 
 Player.prototype.levelCheck = function() {
     if(this.level === "level1") {
@@ -454,11 +385,49 @@ Player.prototype.levelCheck = function() {
         iteams = iteams2;}
 };
 
+//checkLocation base on canvas position, assignes cuurent block, so player stays on the map
 
+Player.prototype.checkLocation = function() {
+    for(var each in this.levelMarkers) {
+        if(this.x > this.levelMarkers[each].x1 && this.x < this.levelMarkers[each].x2 &&
+            this.y > this.levelMarkers[each].y1 && this.y<this.levelMarkers[each].y2) {
+                this.location = each;
+                break;
+                }
+    }
+};
 
+//handleInput based on which key/button was pressed, assigned correct status
+//which will be executed in Player.prototype.move for smooth animation.
+
+Player.prototype.handleInput = function(key) {
+    switch(key){
+        case "left":
+           this.state = "move_left";
+           break;
+
+       case "right":
+           this.state = "move_right";
+           break;
+
+       case "down":
+            this.state = "move_down";
+            break;
+
+       case "up":
+            this.state = "move_up";
+            break;
+
+        case "stand":
+            this.state = "stand";
+            break;
+    }
+};
+
+//As long as status in "move..." player will move in certain location
+//unless position will not within currently assigned blocks.
 
 Player.prototype.move = function(dt) {
-
    if(this.state === "move_left"
         && (this.x-3) > this.levelBlocks.blocks[this.location].left){
        this.x = this.x - (dt * 180);
@@ -477,8 +446,11 @@ Player.prototype.move = function(dt) {
    }
 };
 
-Player.prototype.picUpdate = function(dt) {
+//picUpdate changes picture of the player base on the event
+//when key is picked or after the touch of the bug - for few seconds player is
+//immortal after the touch and then character is pink.
 
+Player.prototype.picUpdate = function(dt) {
     if (this.immortal > (Date.now()/1000)){
         this.sprite = 'images/char-pink-girl-immortal.png';
     } else{
@@ -488,8 +460,10 @@ Player.prototype.picUpdate = function(dt) {
             this.sprite = 'images/char-pink-girl.png';
     }
     }
-
 };
+
+//Player reset fuction, to put life count on zero and move player to start location.
+
 Player.prototype.reset = function() {
         this.lifeCount = 0;
         this.keyStatus = 0;
@@ -498,65 +472,133 @@ Player.prototype.reset = function() {
         this.level = "level1";
 };
 
+//Colision check is inside Engine(), this function is being called if collision
+//happened, and it checks if there is life left - if not starts gameOver status
+//which freezes the game.
+
 Player.prototype.colision = function() {
     if (this.lifeCount === 0){
-
         newGame.gameOver = true;
-
     }
     else if(this.lifeCount > 0) {
         this.immortal = (Date.now()/1000) +2;
         this.lifeCount = this.lifeCount-1;
-
         keyBlock18.status = "onground";
         this.keyStatus = 0;
     }
 };
 
-
-
 Player.prototype.render = function() {
    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
-Player.prototype.checkLocation = function() {
-        for(var each in this.levelMarkers) {
-            if(this.x > this.levelMarkers[each].x1 && this.x < this.levelMarkers[each].x2 &&
-                this.y > this.levelMarkers[each].y1 && this.y<this.levelMarkers[each].y2) {
-                    this.location = each;
-                    break;
-                    }
-        }
+//Enemy objects takes 4 position parameters and rate(speed)
+//x1 and x2 is limiting are where enemy is moving, y1 and y2 is taking average to
+//calculate y axis position.
+
+var Enemy = function(x1, x2, y1, y2, rate) {
+    this.x = x1 +20;
+    this.y = (y1+y2)/2;
+    this.rate =  rate;
+    this.direction = "right";
+    this.x1 = x1;
+    this.x2 = x2;
+    this.sprite = 'images/enemy-bug.png';
+    this.width = 70;
+    this.height = 30;
 };
 
-Player.prototype.handleInput = function(key) {
-    switch(key){
-        case "left":
+Enemy.prototype.update = function(dt) {
+    this.location();
+    this.picture();
+    this.move(dt);
+};
 
-           this.state = "move_left";
-           break;
+//Enemy location checks if the object got to the end of it's path limited by
+// x1 or x2 and then changes its direction.
 
-       case "right":
-
-           this.state = "move_right";
-           break;
-
-       case "down":
-
-            this.state = "move_down";
-            break;
-
-       case "up":
-
-            this.state = "move_up";
-            break;
-
-        case "stand":
-
-            this.state = "stand";
-            break;
+Enemy.prototype.location = function() {
+    if(this.x > this.x2) {
+        this.direction = "left";
+    }else if ((this.x-8) < this.x1) {
+        this.direction = "right";
     }
 };
+
+//Base on direction status, enemy moves this way.
+
+Enemy.prototype.move = function(dt) {
+    if(this.direction === "left"){
+        this.x = this.x - (dt * this.rate);
+    }else if (this.direction === "right"){
+        this.x = this.x + (dt * this.rate);
+    }
+};
+
+//Images is being changed base on direction.
+
+Enemy.prototype.picture = function() {
+    if (this.direction === "right") {
+        this.sprite = 'images/enemy-bug.png';
+    }
+    else if (this.direction === "left") {
+        this.sprite = 'images/enemy-bug-left.png';
+    }
+};
+
+Enemy.prototype.render = function(now) {
+ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+};
+
+//gameReset being called whenever game should be start from the beginning.
+
+Game.prototype.gameReset = function() {
+        player.reset();
+        hearts.forEach(function(heart){
+            heart.status = "onground";
+            heart.renderStatus = "yes";
+        });
+        selectors.forEach(function(selector){
+            selector.status = "onground";
+            selector.renderStatus = "yes";
+        });
+        keyBlock18.status = "onground";
+};
+
+//handleInput for reacting space click button - restarting game, pausing
+
+Game.prototype.handleInput = function(key) {
+    if (key === "spacebar" && this.gameRun === false) {
+        this.gameRun = true;
+        this.endGame = false;
+        this.finishedGame = false;
+        this.displayMessage = true;
+        startMessageTime();
+        this.gameReset();
+    }else if (key === "spacebar" && this.paused === true)  {
+        this.paused = false;
+    } else if (key === "spacebar" && this.paused === false && !this.gameOver) {
+        this.paused = true;
+    } else if (key === "spacebar" && this.gameOver === true) {
+        this.gameOver = false;
+        this.gameReset();
+    }
+};
+
+//Timeout fuction called only on beginning of game (or after complition)
+//to display "call for help" in finding the key
+
+var startMessageTime = function(){
+    setTimeout(messageStart, 5000);
+};
+
+var messageStart = function() {
+    newGame.displayMessage = false;
+};
+
+
+//Heart object can be collected and adds to the lifecount so player can be survive
+//touching the enemy
 
 var Heart = function(x,y) {
     this.x = x;
@@ -568,15 +610,12 @@ var Heart = function(x,y) {
     this.renderStatus = "yes";
 };
 
-Heart.prototype.render = function() {
- if(this.renderStatus === "yes") {
-    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-}
-};
-
 Heart.prototype.update = function() {
     this.checkStatus();
 };
+
+//checkStatus checks if heart was picked, if yes it adds one to lifeCount
+// and prevent further display of object.
 
 Heart.prototype.checkStatus = function() {
     if (this.status === "picked" && this.renderStatus === "yes") {
@@ -585,11 +624,24 @@ Heart.prototype.checkStatus = function() {
     }
 };
 
+Heart.prototype.render = function() {
+ if(this.renderStatus === "yes") {
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+}
+};
+
+//LifeCounter appears on top of screen and shows how many lives player
+//has for use.
+
 var LifeCounter = function(x,y) {
     this.x = x;
     this.y = y;
     this.sprite =  'images/Heart.png';
     this.count = 0 + " x ";
+};
+
+LifeCounter.prototype.update = function() {
+    this.count = player.lifeCount + " x ";
 };
 
 LifeCounter.prototype.render = function() {
@@ -600,10 +652,9 @@ LifeCounter.prototype.render = function() {
     ctx.strokeText(this.count,this.x -20,this.y+125);
 };
 
-LifeCounter.prototype.update = function() {
-    this.count = player.lifeCount + " x ";
-};
 
+//Key is the object which player is looking for, it can be picked and carried.
+//However it will be dropped on collision with enemy even if player has lives left
 
 var Key = function(x,y) {
     this.x = x;
@@ -613,11 +664,6 @@ var Key = function(x,y) {
     this.height =50;
     this.status ="onground";
     this.renderStatus = "yes";
-};
-
-Key.prototype.render = function() {
-    if(this.renderStatus === "yes") {
-    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);}
 };
 
 Key.prototype.update = function() {
@@ -634,6 +680,14 @@ Key.prototype.checkStatus = function() {
     }
 };
 
+Key.prototype.render = function() {
+    if(this.renderStatus === "yes") {
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);}
+};
+
+//Selectors are "stars" showing the way for the player, each selector has unique
+//events therefore their checkStatus functions are not defined in prototype.
+
 var Selector = function(x,y) {
     this.x = x;
     this.y = y;
@@ -647,7 +701,6 @@ var Selector = function(x,y) {
 Selector.prototype.checkStatus = function() {
 };
 
-
 Selector.prototype.render = function() {
     if(this.renderStatus === "yes") {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);}
@@ -657,9 +710,16 @@ Selector.prototype.update = function() {
     this.checkStatus();
 };
 
+//Object selectors being created now, so unique checkstatuses can be assinged.
+
 var level1Selector = new Selector(505,-75);
 var level1Selector2 = new Selector(405,495);
 var level2Selector = new Selector(505,480);
+
+
+//level1Selector shows at the beigging and once touched changes level1 to level2
+//it will appaer again only if player drops the key in level 1 so it possible
+//to return to level2
 
 level1Selector.checkStatus = function() {
     if (this.status === "picked" && this.renderStatus === "yes") {
@@ -671,8 +731,12 @@ level1Selector.checkStatus = function() {
         this.renderStatus = "yes";
         this.status = "onground";
     }
-
 };
+
+//level1Selector2 shows when player comes back to level1 with the key
+//Once player gets to it, endGame is being changed to true, which starts
+//animation + endMessageTime is being called which after 5 sec. displays
+//end message and stops animation after 15 sec.
 
 level1Selector2.checkStatus = function() {
     if (player.keyStatus === 1) {
@@ -688,14 +752,17 @@ level1Selector2.checkStatus = function() {
 };
 
 var endMessageTime = function(){
-    setTimeout(endMessage, 6000);
+    setTimeout(endMessage, 5000);
 };
 
 var endMessage = function() {
-    newGame.endGame = false;
+    setTimeout(function(){newGame.endGame = false;}, 15000);
     newGame.finishedGame = true;
     newGame.gameRun = false;
 };
+
+//level2Selector shows in level2 when player picks up the key,
+//once player gets to it, the level2 will change to level1.
 
 level2Selector.checkStatus = function() {
     if (player.keyStatus === 0) {
@@ -710,9 +777,10 @@ level2Selector.checkStatus = function() {
             player.y = -60;
             this.renderStatus = "no";
     }}
-
 };
 
+//keydown addEventListener for moving a player on the map
+// and pressing space for pause/restart game
 
 document.addEventListener('keydown', function(e) {
 
@@ -734,6 +802,8 @@ document.addEventListener('keydown', function(e) {
   }
 });
 
+//keyup event so player stops once key is no longer pressed.
+
 document.addEventListener('keyup', function(e) {
    if(newGame.gameRun === true ){
     var allowedKeys = {
@@ -746,63 +816,79 @@ document.addEventListener('keyup', function(e) {
     }});
 
 
-
-
-
-
-
+//Jquery controls for on screen control buttons, adjusted also for touch devices.
+//once buttons are pressed their css is being changed too
 
 $(document).on("mouseup touchend", "#up, #left , #right, #down", function() {
     player.handleInput("stand");
+    $("#up, #left , #right, #down").css("background", "#6495ED");
 });
 
 $(document).on("mousedown touchstart", "#up", function() {
     player.handleInput("up");
+    $("#up").css("background", "#416099");
 });
 
 $(document).on("mousedown touchstart", "#left", function() {
     player.handleInput("left");
+    $("#left").css("background", "#416099");
 });
-
 
 $(document).on("mousedown touchstart", "#right", function() {
     player.handleInput("right");
+    $("#right").css("background", "#416099");
 });
-
 
 $(document).on("mousedown touchstart", "#down", function() {
     player.handleInput("down");
+    $("#down").css("background", "#416099");
 });
-
-
 
 $("#space").click(function() {
      newGame.handleInput("spacebar");
 });
 
+//Creating enemies for level1 - using blocks data for defining x1,x2,y1,y2
 
-var enemy1Block56 = new Enemy(level1markers.block5.x1,level1markers.block6.x2,level1markers.block5.y1+10,level1markers.block5.y2,130);
-var enemy1Block1315 = new Enemy(level1markers.block13.x1,level1markers.block15.x2-10,level1markers.block13.y1+30,level1markers.block13.y2-10,220);
-var enemy1Block1110 = new Enemy(level1markers.block11.x1,level1markers.block10.x2,level1markers.block10.y1,level1markers.block10.y2,200);
+var enemy1Block56 = new Enemy(level1markers.block5.x1,level1markers.block6.x2,
+    level1markers.block5.y1+10,level1markers.block5.y2,160);
 
-var enemy2Block52 = new Enemy(level2markers.block5.x1,level2markers.block2.x2-10,level2markers.block5.y1+20,level2markers.block5.y2,180);
-var enemy2Block8 = new Enemy(level2markers.block8.x1,level2markers.block9.x2,level2markers.block8.y1-20,level2markers.block8.y2,220);
-var enemy2Block1215 = new Enemy(level2markers.block12.x1,level2markers.block15.x2,level2markers.block13.y1+20,level2markers.block13.y2,205);
+var enemy1Block1315 = new Enemy(level1markers.block13.x1,level1markers.block15.x2-10,
+    level1markers.block13.y1+30,level1markers.block13.y2-10,220);
 
+var enemy1Block1110 = new Enemy(level1markers.block11.x1,level1markers.block10.x2,
+    level1markers.block10.y1,level1markers.block10.y2,250);
+
+//Creating enemies for level2
+
+var enemy2Block52 = new Enemy(level2markers.block5.x1,level2markers.block2.x2-10,
+    level2markers.block5.y1+20,level2markers.block5.y2,180);
+
+var enemy2Block8 = new Enemy(level2markers.block8.x1,level2markers.block9.x2,
+    level2markers.block8.y1-20,level2markers.block8.y2,220);
+
+var enemy2Block1215 = new Enemy(level2markers.block12.x1,level2markers.block15.x2,
+    level2markers.block13.y1+20,level2markers.block13.y2,240);
+
+//Enemies being grouped in two list so they can changed, base on the level
 
 var allEnemies2 = [enemy2Block52,enemy2Block8,enemy2Block1215];
 var allEnemies1 = [enemy1Block1110,enemy1Block1315,enemy1Block56];
 var allEnemies = [];
 
-
+//Other items
 
 var heart2Block7 = new Heart(5, 325);
 var heart1Block11 = new Heart(0, 100);
 var keyBlock18 = new Key(391,250);
 var player = new Player();
 
+//Items being grouped in list for game resart
+
 var hearts = [heart2Block7,heart1Block11];
 var selectors = [level1Selector,level1Selector2,level2Selector];
+
+//Items being grouped for level changes
 
 var iteams2 = [heart2Block7,keyBlock18,level2Selector];
 var iteams1 = [heart1Block11,level1Selector,level1Selector2];

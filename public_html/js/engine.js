@@ -4,17 +4,17 @@
 
 /* global newGame, player, allEnemies, iteams, lifeCounter */
 
+//Level drawing information.
+//Base on player location, Engine will use right function for display.
+
 var level1 = function () {
     for (col = 0; col < 6; col++) {
         ctx.drawImage(Resources.get('images/water-block.png'), col * 101, -50);
     }
-
     for (col = 0; col < 5; col++) {
         ctx.drawImage(Resources.get('images/water-block.png'), col * 101, -30);
     }
-
     ctx.drawImage(Resources.get('images/Ramp South.png'), 5 * 101, -50);
-
     /*First Row */
     for (col = 0; col <6; col++) {
         ctx.drawImage(Resources.get('images/stone-block.png'), col * 101, 50);
@@ -30,7 +30,6 @@ var level1 = function () {
         ctx.drawImage(Resources.get('images/grass-block.png'), col * 101, 205);
     }
  /*Third Row */
-
     for (col = 3; col < 6; col++) {
         ctx.drawImage(Resources.get('images/grass-block.png'), col * 101, 285);
     }
@@ -38,7 +37,6 @@ var level1 = function () {
         ctx.drawImage(Resources.get('images/Shadow North.png'), col * 101, 283);
     }
     ctx.drawImage(Resources.get('images/Shadow South West.png'), 300, 205);
-
 /*HOUSE*/
     ctx.drawImage(Resources.get('images/Roof North West.png'), 0 * 101, 240);
     ctx.drawImage(Resources.get('images/Roof North.png'), 1 * 101, 240);
@@ -49,8 +47,6 @@ var level1 = function () {
     ctx.drawImage(Resources.get('images/Door Tall Closed.png'), 1 * 101, 470);
     ctx.drawImage(Resources.get('images/Window Tall.png'), 2 * 101, 420);
     ctx.drawImage(Resources.get('images/Wood Block.png'), 1 * 101, 365);
-
-
     ctx.drawImage(Resources.get('images/Roof South West.png'), 0 * 101, 320);
     ctx.drawImage(Resources.get('images/Roof South.png'), 1 * 101, 320);
     ctx.drawImage(Resources.get('images/Roof South East.png'), 2 * 101, 320);
@@ -58,26 +54,21 @@ var level1 = function () {
     for (col = 0; col < 3; col++) {
         ctx.drawImage(Resources.get('images/Shadow South.png'), col * 101, 400);
     }
-
     ctx.drawImage(Resources.get('images/Shadow West.png'), 300, 283);
-
 
     for (col = 3; col < 6; col++) {
         ctx.drawImage(Resources.get('images/grass-block.png'), col * 101, 363);
     }
     ctx.drawImage(Resources.get('images/Shadow West.png'), 300, 363);
 /*Sixth Row */
-
     for (col = 3; col < 6; col++) {
         ctx.drawImage(Resources.get('images/grass-block.png'), col * 101, 444);
     }
     ctx.drawImage(Resources.get('images/Shadow West.png'), 300, 444);
-
     ctx.drawImage(Resources.get('images/Shadow North.png'), 3 * 101, 467);
     ctx.drawImage(Resources.get('images/Shadow North.png'), 5 * 101, 467);
     ctx.drawImage(Resources.get('images/Wall Block.png'), 3 * 101, 465);
     ctx.drawImage(Resources.get('images/Ramp North.png'), 4 * 101, 487);
-
     ctx.drawImage(Resources.get('images/Wall Block.png'), 5 * 101, 465);
 
     for (col = 0; col < 6; col++) {
@@ -85,28 +76,24 @@ var level1 = function () {
     }
 
 /*trees*/
-
     ctx.drawImage(Resources.get('images/Tree Ugly.png'), 505, 175);
     ctx.drawImage(Resources.get('images/Tree Short.png'), 305, 345);
-
 };
+
 var level2 = function () {
     for (col = 0; col < 6; col++) {
         ctx.drawImage(Resources.get('images/water-block.png'), col * 101, -50);
     }
-
     /*First Row */
     for (col = 0; col <6; col++) {
         ctx.drawImage(Resources.get('images/Dirt Block.png'), col * 101, 30);
     }
-
     /*Second Row */
     for (col = 0; col < 6; col++) {
         ctx.drawImage(Resources.get('images/grass-block.png'), col * 101, 115);
     }
     ctx.drawImage(Resources.get('images/Rock.png'), 3 * 101, 80);
     ctx.drawImage(Resources.get('images/Rock.png'), 4 * 101, 80);
-
     /*Third Row */
      for (col = 0; col < 2; col++) {
         ctx.drawImage(Resources.get('images/water-block.png'), col * 101, 200);
@@ -117,7 +104,6 @@ var level2 = function () {
         ctx.drawImage(Resources.get('images/water-block.png'), col * 101, 200);
     }
     ctx.drawImage(Resources.get('images/Wall Block.png'), 5*101, 190);
-
      /*Fourth Row */
     for (col = 0; col < 3; col++) {
         ctx.drawImage(Resources.get('images/grass-block.png'), col * 101, 275);
@@ -126,7 +112,6 @@ var level2 = function () {
         ctx.drawImage(Resources.get('images/grass-block.png'), col * 101, 275);
     }
     ctx.drawImage(Resources.get('images/water-block.png'), 3 * 101, 275);
-
       /*Fifth Row */
     for (col = 0; col < 3; col++) {
         ctx.drawImage(Resources.get('images/grass-block.png'), col * 101, 355);
@@ -135,7 +120,6 @@ var level2 = function () {
     for (col = 3; col < 6; col++) {
         ctx.drawImage(Resources.get('images/water-block.png'), col * 101, 355);
     }
-
     /*Sixth Row */
     for (col = 0; col < 2; col++) {
         ctx.drawImage(Resources.get('images/Shadow South.png'), col * 101, 390);
@@ -143,7 +127,6 @@ var level2 = function () {
     for (col = 0; col < 6; col++) {
         ctx.drawImage(Resources.get('images/stone-block.png'), col * 101, 435);
     }
-
     /*Seventh Row */
     for (col = 0; col < 5; col++) {
        ctx.drawImage(Resources.get('images/water-block.png'), col * 101, 550);
@@ -152,28 +135,22 @@ var level2 = function () {
 };
 
 
+var canvas = document.createElement('canvas'),
+    ctx = canvas.getContext('2d'),
+    lastTime;
 
-
-    var canvas = document.createElement('canvas'),
-        ctx = canvas.getContext('2d'),
-        lastTime;
-
-    canvas.width = 606;
-    canvas.height = 664;
-
-
+canvas.width = 606;
+canvas.height = 664;
 
 var Engine = (function() {
-
-
-
     $("#canvas").append(canvas);
-
 
     function main() {
 
         var now = Date.now(),
             dt = (now - lastTime) / 1000.0;
+
+//incase of game pause, game over or end game no updates will run
 
         if(newGame.gameRun === true && !newGame.paused && !newGame.gameOver &&
                 !newGame.endGame){
@@ -181,15 +158,20 @@ var Engine = (function() {
         render(now);
         }
 
-        if(newGame.gameRun === true && newGame.displayMessage === true){
-            textDrawer ("Oh No! I lost the key to the house!",canvas.width/2,canvas.height/2);
-            textDrawer ("Help me find it in the garden!",canvas.width/2,(canvas.height/2)+40);
+//displaying call for help at the beginning of the game
 
+        if(newGame.gameRun === true && newGame.displayMessage === true){
+            textDrawer ("Oh No! I lost the key to the house!",canvas.width/2,canvas.height/2+100);
+            textDrawer ("Help me find it in the garden!",canvas.width/2,(canvas.height/2)+140);
         }
+
+//if the endGame is true runs the end animation
 
         if(newGame.endGame === true){
             renderEndGame();
         }
+
+//after few seconds status changes and end message apears
 
         if(newGame.finishedGame === true) {
             ctx.globalAlpha = 1;
@@ -197,11 +179,9 @@ var Engine = (function() {
             textDrawer ("Press SPACE to start again!",canvas.width/2,(canvas.height/2)+40);
         }
 
-
         lastTime = now;
         window.requestAnimationFrame(main);
     };
-
 
     function init() {
         reset();
@@ -210,10 +190,13 @@ var Engine = (function() {
     }
 
     function update(dt,now) {
-
         updateEntities(dt);
         checkCollisions(now);
     }
+
+//check colisions, if player touched an enemy or an object.
+//If enemy, function call player.colision which will deduct life or change status
+//to game over.
 
     function checkCollisions(now){
         if (player.immortal < (now/1000)){
@@ -224,62 +207,51 @@ var Engine = (function() {
         }
         });
     }
-        iteams.forEach(function(item) {
-
+    iteams.forEach(function(item) {
         if (player.x < item.x +  item.width  && player.x + player.width  > item.x &&
 		player.y < item.y +  item.height && player.y + player.height > item.y) {
                    item.status="picked";
         }
         });
-
-
     }
 
     function updateEntities(dt) {
-
         allEnemies.forEach(function(enemy) {
             enemy.update(dt);
         });
+
         player.update(dt);
         iteams.forEach(function(item) {
             item.update();
         });
 
         lifeCounter.update();
-
     }
 
+//base on level in player.level function renders right level
 
     function render() {
-
             /*Background*/
         if(player.level === "level1"){
             level1();
         } else if (player.level === "level2") {
             level2();
         }
-
-
-
         renderEntities();
     }
 
     function renderEntities() {
-
         allEnemies.forEach(function(enemy) {
             enemy.render();
         });
         iteams.forEach(function(item) {
             item.render();
         });
-
         player.render();
-
-
-
         lifeCounter.render();
-
     };
+
+//textDrawer is used to display text messages on canvas
 
     function textDrawer (text, x , y) {
         ctx.font = "28px Sigmar One";
@@ -291,13 +263,15 @@ var Engine = (function() {
         ctx.fillText(text, x, y);
     }
 
-
+//reset is used to display message when game is paused or when it is game over
 
     function reset() {
-
         if (!newGame.gameRun && !newGame.finishedGame || newGame.paused === true){
         textDrawer ("Press SPACE to start",canvas.width/2,canvas.height/2);
     }
+
+//game over changes background to greyscale and displayes text
+
         if (newGame.gameOver === true){
             imgData = ctx.getImageData(0,0, canvas.width, canvas.height);
             for (var i=0;i<imgData.data.length;i+=4) {
@@ -314,12 +288,18 @@ var Engine = (function() {
             textDrawer ("Press SPACE to start again!",canvas.width/2,(canvas.height/2)+40);
     }
 
-
     window.requestAnimationFrame(reset);
     }
 
-    initParticles();
 
+//initParticles and all functions below are responsible for final animation, when
+//player finishes the game. Below idea comes from blog run by Rachel Smith
+//http://codepen.io/rachsmith/blog/hack-physics-and-javascript-1
+//"A super simple and super fun example - let’s make a particle fountain!"
+//Instead of drwan squares I used heart.png
+
+
+    initParticles();
     var particles = [];
     var gravity = 0.04;
 
@@ -337,14 +317,12 @@ var Engine = (function() {
       var vx = -2+Math.random()*4;
       var vy = Math.random()*-3;
       // randomize size and opacity a little & pick a color from our color palette
-
       var opacity =  0.5 + Math.random()*0.5;
       var p = new Particle(x, y, vx, vy, opacity);
       particles.push(p);
     }
 
     function Particle(x, y, vx, vy, opacity) {
-
       function reset() {
         x = canvas.width*0.5;
         y = canvas.height*0.5 - 150;
@@ -352,12 +330,10 @@ var Engine = (function() {
         vx = -2+Math.random()*4;
         vy = Math.random()*-3;
       }
-
       this.update = function() {
         // if a particle has faded to nothing we can reset it to the starting position
         if (opacity - 0.005 > 0) opacity -= 0.005 ;
         else reset();
-
         // add gravity to vy
         vy += gravity;
         x += vx;
@@ -375,11 +351,8 @@ var Engine = (function() {
       for (var i = 0; i < particles.length; i++) {
         particles[i].update();
         particles[i].draw();
-      }
-
+        }
     }
-
-
 
     Resources.load([
         'images/stone-block.png',
@@ -412,16 +385,14 @@ var Engine = (function() {
         'images/Shadow West.png',
         'images/Shadow South West.png',
         'images/Tree Short.png',
-        'images/Tree Tall.png',
         'images/Tree Ugly.png',
         'images/Selector.png',
         'images/Shadow South.png'
-
     ]);
     Resources.onReady(init);
-
-
 });
+
+//Jquery controls for displaying canvas
 
 $("#play").click(function() {
     Engine();
@@ -430,14 +401,14 @@ $("#play").click(function() {
     $(".menu").css("margin-top",0);
 });
 
-
+//Jquery controls for displaying control buttons
+//Including changing adding css so if controls are hidden canvas is in the middle
 
 $("#show").click(function() {
     $(".inline2").toggle("slow", function(){
         cssChanger();
     });
     cssChanger();
-
 });
 
 var cssChanger = function(){
@@ -448,9 +419,6 @@ var cssChanger = function(){
         $(".inline1").css("float", "none");
         $(".inline1").css("width", "100%");
     }};
-
-
-
 
 $("#instruc").click(function() {
     $("#instrucList").slideToggle("slow");

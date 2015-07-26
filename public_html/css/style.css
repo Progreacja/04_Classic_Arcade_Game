@@ -1,25 +1,22 @@
-html,body {
+/******************
+     BODY
+************************/
+
+html,
+body {
     text-align: center;
     margin: 0;
     padding: 0;
     height: 98%;
 }
 
-.main {
-    position: relative; /* needed for footer positioning*/
-    margin: 0 auto; /* center, not in IE5 */
-    height: auto !important; /* real browsers */
-    height: 100%; /* IE6: treaded as min-height*/
-    max-width: 960px;
-    min-height: 100%; /* real browsers */
-
-}
-
 a {
     padding: 0;
     margin: 0;
     text-align: center;
+    transition: 0.2s ease-in-out;
 }
+
 ul {
    font-family: 'Istok Web', sans-serif;
    font-style: italic;
@@ -27,6 +24,7 @@ ul {
    padding-left: 0;
    list-style-type: none;
 }
+
 li {
     padding-top: 10px;
 }
@@ -34,7 +32,7 @@ li {
 h1 {
    font-family: 'Sigmar One', cursive;
    font-size: 2em;
-   color: cornflowerblue;
+   color: #6495ED;
 }
 
 h2 {
@@ -44,16 +42,39 @@ h2 {
    color: #c0c0c0;
 }
 
+.pic {
+    width: 50px;
+    margin: 0 20px;
+}
+
+canvas {
+    max-width: 550px;
+ }
+
+/******************
+     Content
+************************/
+
+.main {
+    position: relative; /* needed for footer positioning*/
+    margin: 0 auto; /* center, not in IE5 */
+    height: auto !important; /* real browsers */
+    height: 100%; /* IE6: treaded as min-height*/
+    max-width: 960px;
+    min-height: 100%; /* real browsers */
+}
+
 .menuitem a,
 .menuitem a:visited {
     text-decoration: none;
     color: chocolate;
     clear: both;
+}
 
-}
 .menuitem a:hover {
-    color: cornflowerblue;
+    color: #6495ED;
 }
+
 .menuitem {
     width: 100%;
     clear: both;
@@ -64,8 +85,47 @@ h2 {
     font-size: 2em;
     padding-bottom: 10%;
     font-family: 'Sigmar One', cursive;
+}
 
+#show,
+#instrucList {
+    display: none;
+}
+
+.btn {
+  display:inline-block;
+  border-radius: 20%;
+  font-family: 'Istok Web', sans-serif;
+  color: #ffffff;
+  font-size: 18px;
+  background: #6495ED;
+  padding: 10px 20px;
+  text-decoration: none;
+  width: 60px;
+  -webkit-user-select: none; /* disable selection/Copy of UIWebView */
+  -webkit-touch-callout: none; /* disable the IOS popup when long-press on a link */
+}
+
+.btn:hover {
+  text-decoration: none;
  }
+
+.inline1 {
+    width: 100%;
+    float: none;
+    transition: 0.5s ease-in-out;
+}
+
+.inline2 {
+    width: 40%;
+    float: right;
+    display: none;
+    margin-top: 20%;
+}
+
+/******************
+     Footer
+************************/
 
 footer {
     font-size: 0.78em;
@@ -75,19 +135,6 @@ footer {
     position: absolute;
     width: 100%;
     bottom: 0;
-}
-
-a {
-    transition: 0.2s ease-in-out;
-}
-
-#show {
-    display: none;
-}
-
-.pic {
-    width: 50px;
-    margin: 0 20px;
 }
 
 .social-icon {
@@ -103,43 +150,37 @@ a {
     transform: scale(1.2,1.2);
 }
 
-#instrucList {
-    display: none;
-}
-canvas {
-    max-width: 550px;
- }
+/******************
+     RESPONSIVE CSS
+************************/
 
- .btn {
-  display:inline-block;
-  border-radius: 20%;
-  font-family: 'Istok Web', sans-serif;
-  color: #ffffff;
-  font-size: 18px;
-  background: cornflowerblue;
-  padding: 10px 20px;
-  text-decoration: none;
-  width: 60px;
-}
+@media only screen and (max-width: 1000px) {
+        canvas {
+            max-width: 450px;
+        }
+        .main {
+            max-width: 760px;
+        }
+        .btn {
+            width: 45px;
+            font-size: 15px;
+        }
 
+    }
 
-.btn:hover {
-  text-decoration: none;
-}
+@media only screen and (max-width: 735px) {
+        canvas {
+            max-width: 350px;
+        }
+        .main {
+            max-width: 660px;
+        }
+        .btn {
+            width: 35px;
+            font-size: 12px;
+        }
+        .menuitem {
+            padding-bottom: 10px;
+        }
 
-.inline1 {
-    width: 100%;
-    float: none;
-    transition: 0.5s ease-in-out;
-
-}
-.inline2 {
-    width: 40%;
-    float: right;
-    display: none;
-    margin-top: 20%;
-}
-.btn {
-  -webkit-user-select: none; /* disable selection/Copy of UIWebView */
-  -webkit-touch-callout: none; /* disable the IOS popup when long-press on a link */
-}
+    }
