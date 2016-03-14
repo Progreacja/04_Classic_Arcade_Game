@@ -13,7 +13,7 @@ You will be provided with visual assets and a game loop engine; using these tool
 
 -------
 
-ONLINE VERSION of the project: [http://www.thefullresolution.com/arcade_game/index.html](http://www.thefullresolution.com/arcade_game/index.html)
+ONLINE VERSION of the project: [http://www.thefullresolution.com/arcade_game/](http://www.thefullresolution.com/arcade_game/)
 
 -------
 
