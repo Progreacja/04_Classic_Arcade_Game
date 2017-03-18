@@ -1,11 +1,11 @@
-###Udacity Front-End Web Developer Nanodegree – Project 03
+### Udacity Front-End Web Developer Nanodegree – Project 03
 
 
-#Classic Arcade Game Clone – “Find a Key”
+# Classic Arcade Game Clone – “Find a Key”
 
 
 
-###Project Requirements:
+### Project Requirements:
 
 <br>
 You will be provided with visual assets and a game loop engine; using these tools you must add a number of entities to the game including the player characters and enemies to recreate the classic arcade game Frogger.
@@ -17,7 +17,7 @@ ONLINE VERSION of the project: [http://www.thefullresolution.com/arcade_game/](h
 
 -------
 
-###General Usage Notes
+### General Usage Notes
 
 -	To run a game open index.html if the project is downloaded from GitHub.
 -	You need an active internet connection since project uses Google fonts and jQuery.
@@ -30,7 +30,7 @@ ONLINE VERSION of the project: [http://www.thefullresolution.com/arcade_game/](h
 
 
 
-###Game Rules
+### Game Rules
 
 -	Goal is to find a key to the house. Follow the star markers to find a key.
 -	There are two levels in the game, key is in the second one, you must bring key back to complete a game.
@@ -41,7 +41,7 @@ ONLINE VERSION of the project: [http://www.thefullresolution.com/arcade_game/](h
 
 
 
-####Sources used in the project:
+#### Sources used in the project:
 
 -	[http://codepen.io/rachsmith/blog/hack-physics-and-javascript-1](http://codepen.io/rachsmith/blog/hack-physics-and-javascript-1)
 -	[http://blog.sklambert.com/html5-game-tutorial-game-ui-canvas-vs-dom/](http://blog.sklambert.com/html5-game-tutorial-game-ui-canvas-vs-dom/)
