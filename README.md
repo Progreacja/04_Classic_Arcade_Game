@@ -13,7 +13,7 @@ You will be provided with visual assets and a game loop engine; using these tool
 
 -------
 
-ONLINE VERSION of the project: [https://find-the-key.netlify.com/](https://find-the-key.netlify.com/)
+ONLINE VERSION of the project: [https://find-the-key.netlify.app](https://find-the-key.netlify.app)
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/0ada28da-7f47-4948-b382-d4a2d802e026/deploy-status)](https://app.netlify.com/sites/find-the-key/deploys)
 -------
